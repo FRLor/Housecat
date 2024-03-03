@@ -188,6 +188,7 @@ void Game::LoadLevel(int level) {
 			mapFile.ignore();
 
 			Entity tile = housecat->CreateEntity();
+			tile.Group("tilemap");
 			tile.AddComponent<TransformComponent>(glm::vec2(x * (tileScale * tileSize), y * (tileScale * tileSize)), glm::vec2(tileScale, tileScale), 0.0);
 			tile.AddComponent<SpriteComponent>("map", tileSize, tileSize, 0, false, srcRectX, srcRectY);
 			
@@ -220,6 +221,7 @@ void Game::LoadLevel(int level) {
 	//housecat->AddComponent<TransformComponent>(cat1, glm::vec2(250.0, 250.0), glm::vec2(1.0, 1.0), 0.0);
 
 	//TESTING GROUNDS
+	player.Tag("player");
 	player.AddComponent<UserControlComponent>(glm::vec2(0, -90), glm::vec2(90, 0), glm::vec2(0, 90), glm::vec2(-90, 0));
 	player.AddComponent<TransformComponent>(glm::vec2(180, 500), glm::vec2(4.0, 4.0), 0.0);
 	player.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
@@ -230,6 +232,7 @@ void Game::LoadLevel(int level) {
 	player.AddComponent<BoxColliderComponent>(22, 20, glm::vec2(20.0, 24.0));
 	player.AddComponent<CameraComponent>();
 
+	cat1.Group("cats");
 	cat1.AddComponent<TransformComponent>(glm::vec2(150, 250), glm::vec2(4.0, 4.0), 0.0);
 	cat1.AddComponent<RigidBodyComponent>(glm::vec2(20.0, 0.0));
 	cat1.AddComponent<AnimationComponent>(4, 5, true);
@@ -237,6 +240,7 @@ void Game::LoadLevel(int level) {
 	cat1.AddComponent<SpriteComponent>("npc", 32, 32, 3);
 	//cat1.AddComponent<BoxColliderComponent>(22, 20, glm::vec2(20.0, 24.0));
 
+	cat2.Group("cats");
 	cat2.AddComponent<TransformComponent>(glm::vec2(90, 295), glm::vec2(2.0, 2.0), 0.0);
 	cat2.AddComponent<AnimationComponent>(4, 8, true);
 	cat2.AddComponent<MovementStateComponent>(true);
@@ -244,13 +248,15 @@ void Game::LoadLevel(int level) {
 	cat2.AddComponent<SpriteComponent>("npc", 32, 32, 2);
 	//cat2.AddComponent<BoxColliderComponent>(22, 20, glm::vec2(10.0, 16.0));
 
+	cat3.Group("cats");
 	cat3.AddComponent<TransformComponent>(glm::vec2(160, 270), glm::vec2(2.0, 2.0), 0.0);
 	cat3.AddComponent<AnimationComponent>(4, 8, true);
 	cat3.AddComponent<MovementStateComponent>(true);
 	cat3.AddComponent<RigidBodyComponent>(glm::vec2(20.0, 0.0));
 	cat3.AddComponent<SpriteComponent>("npc", 32, 32, 2);
 	//cat3.AddComponent<BoxColliderComponent>(22, 20, glm::vec2(10.0, 16.0));
-
+	
+	cat4.Group("cats");
 	cat4.AddComponent<TransformComponent>(glm::vec2(140, 315), glm::vec2(2.0, 2.0), 0.0);
 	cat4.AddComponent<AnimationComponent>(4, 8, true);
 	cat4.AddComponent<MovementStateComponent>(true);
@@ -259,20 +265,23 @@ void Game::LoadLevel(int level) {
 	//cat4.AddComponent<BoxColliderComponent>(22, 20, glm::vec2(10.0, 16.0));
 
 
-
+	ghost.Group("enemy");
 	ghost.AddComponent<TransformComponent>(glm::vec2(540, 400), glm::vec2(2.0, 2.0), 0.0);
 	ghost.AddComponent<AnimationComponent>(10, 10, true);
 	ghost.AddComponent<MovementStateComponent>(true);
 	ghost.AddComponent<RigidBodyComponent>(glm::vec2(0.0, 0.0));
 	ghost.AddComponent<SpriteComponent>("ghost", 32, 32, 4);
 	ghost.AddComponent<BoxColliderComponent>(32, 32);
+	ghost.AddComponent<DamageAreaComponent>(false, 20);
 
-
+	fire.Group("hazards");
 	fire.AddComponent<TransformComponent>(glm::vec2(200, 700), glm::vec2(5.0, 5.0), 0.0);
 	fire.AddComponent<MovementStateComponent>(true);
 	fire.AddComponent<AnimationComponent>(8, 10, true);
 	fire.AddComponent<SpriteComponent>("fire", 24, 32, 4);
 	fire.AddComponent<BoxColliderComponent>(15, 5, glm::vec2(25, 32 * 4.2));
+	fire.AddComponent<DamageAreaComponent>(false, 10);
+
 
 
 	chest.AddComponent<TransformComponent>(glm::vec2(540, 100), glm::vec2(3.0, 3.0), 0.0);

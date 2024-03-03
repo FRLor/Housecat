@@ -24,6 +24,22 @@ void Entity::Kill() {
 	housecat->KillEntity(*this);
 }
 
+void Entity::Tag(const std::string& tag) {
+	housecat->AddTag(*this, tag);
+}
+
+bool Entity::HasTag(const std::string& tag) {
+	return housecat->HasTag(*this, tag);
+}
+
+void Entity::Group(const std::string& group) {
+	housecat->AddGroup(*this, group);
+}
+
+bool Entity::HasGroup(const std::string& group) {
+	return housecat->HasGroup(*this, group);
+}
+
 //REMIND
 //TODO
 
@@ -127,6 +143,63 @@ void Housecat::RemoveEntityFromSystems(Entity entity) {
 	}
 }
 
+void Housecat::AddTag(Entity entity, const std::string& tag) {
+	entityByTag.emplace(tag, entity);
+	tagByEntityID.emplace(entity.GetID(), tag);
+}
+
+void Housecat::RemoveTag(Entity entity) {
+	auto taggedEntity = tagByEntityID.find(entity.GetID());
+	if (taggedEntity != tagByEntityID.end()) {
+		auto tag = taggedEntity->second;
+		entityByTag.erase(tag);
+		tagByEntityID.erase(taggedEntity);
+	}
+}
+
+bool Housecat::HasTag(Entity entity, const std::string& tag) const {
+	if (tagByEntityID.find(entity.GetID()) == tagByEntityID.end()) {
+		return false;
+	}
+	return entityByTag.find(tag)->second == entity;
+}
+
+Entity Housecat::GetTag(const std::string& tag) const {
+	return entityByTag.at(tag);
+}
+
+void Housecat::AddGroup(Entity entity, const std::string& group) {
+	entitiesByGroup.emplace(group, std::set<Entity>());
+	entitiesByGroup[group].emplace(entity);
+	groupByEntityID.emplace(entity.GetID(), group);
+}
+
+void Housecat::RemoveGroup(Entity entity) {
+	auto groupedEntity = groupByEntityID.find(entity.GetID());
+	if (groupedEntity != groupByEntityID.end()) {
+		auto group = entitiesByGroup.find(groupedEntity->second);
+		if (group != entitiesByGroup.end()) {
+			auto entityInGroup = group->second.find(entity);
+			if (entityInGroup != group->second.end()) {
+				group->second.erase(entityInGroup);
+			}
+		}
+		groupByEntityID.erase(groupedEntity);
+	}
+}
+bool Housecat::HasGroup(Entity entity, const std::string& group) const {
+	if (entitiesByGroup.find(group) == entitiesByGroup.end()) {
+		return false;
+	}
+	auto groupEntities = entitiesByGroup.at(group);
+	return groupEntities.find(entity.GetID()) != groupEntities.end();
+}
+
+std::vector<Entity> Housecat::GetGroup(const std::string& group) const {
+	auto& setEntities = entitiesByGroup.at(group);
+	return std::vector<Entity>(setEntities.begin(), setEntities.end());
+}
+
 //process housecat management
 void Housecat::Update() {
 	//creation
@@ -142,6 +215,10 @@ void Housecat::Update() {
 
 		//reuse that ID
 		freedIDs.push_back(entity.GetID());
+
+		//remove their tags|groups
+		RemoveTag(entity);
+		RemoveGroup(entity);
 	}
 	entitiesToKill.clear();
 }

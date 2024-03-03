@@ -66,6 +66,12 @@ public:
 	int GetID() const;
 	void Kill();
 
+	//tagging groupping entity management
+	void Tag(const std::string& tag);
+	bool HasTag(const std::string& tag);
+	void Group(const std::string& group);
+	bool HasGroup(const std::string& group);
+
 	bool operator==(const Entity& other) const {
 		return ID == other.ID;
 	}
@@ -220,6 +226,13 @@ private:
 	std::set<Entity> entitiesToAdd;
 	std::set<Entity> entitiesToKill;
 
+	//entity tags - one tag per entity
+	std::unordered_map<std::string, Entity> entityByTag;
+	std::unordered_map<int, std::string> tagByEntityID;
+	//entity groups - set of entties per group
+	std::unordered_map<std::string, std::set<Entity>> entitiesByGroup;
+	std::unordered_map<int, std::string> groupByEntityID;
+
 	//each pool has all data for certain component type
 	//vector index = component type ID
 	//Pool index = entity ID
@@ -256,11 +269,22 @@ public:
 
 	//TODO entity management
 	//freeze?
-	//tagging and? grouping
 
 	//check component signature before adding | removing to system
 	void AddEntityToSystems(Entity entity);
 	void RemoveEntityFromSystems(Entity entity);
+
+	//tagging management
+	void AddTag(Entity entity, const std::string& tag);
+	void RemoveTag(Entity entity);
+	bool HasTag(Entity entity, const std::string& tag) const;
+	Entity GetTag(const std::string& tag) const;
+
+	//grouping management
+	void AddGroup(Entity entity, const std::string& group);
+	void RemoveGroup(Entity entity);
+	bool HasGroup(Entity entity, const std::string& group) const;
+	std::vector<Entity> GetGroup(const std::string& group) const;
 
 	void Update();
 
