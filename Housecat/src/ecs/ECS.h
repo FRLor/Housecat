@@ -142,7 +142,8 @@ public:
 //-----------------------------------------//
 class IPool {
 public:
-	virtual ~IPool() {}
+	virtual ~IPool() = default;
+	virtual void RemoveEntityFromPool(int entityID) = 0;
 };
 
 template <typename T>
@@ -151,34 +152,31 @@ private:
 	int size;
 	std::vector<T> data;
 
-	//TODO
-	//track entity IDs per index?
-	//unordered_map<int, int>
+	//tracks entity IDs per index, data packing
+	std::unordered_map<int, int> entityIDToIndex;
+	std::unordered_map<int, int> indexToEntityID;
 public:
 	//REMIND
-	Pool(int size = 100) {
+	Pool(int capacity = 100) {
 		//fix
 		size = 0;
-		data.resize(size);
+		data.resize(capacity);
 	}
 
 	virtual ~Pool() = default;
 
 	int GetSize() const {
-		return data.size();
+		return size;
 	}
 
 	bool IsEmpty() const {
-		return data.empty();
+		return size == 0;
 	}
 
 	void Resize(int n) {
 		data.resize(n);
 	}
 
-	void Add(T object) {
-		data.push_back(object);
-	}
 
 	void Clear() {
 		data.clear();
@@ -186,21 +184,57 @@ public:
 		size = 0;
 	}
 
-	//TODO
-	//map entityID -> component
-	//eror handling: if entity has component, update component index
-	//else, add new component??
-	void Set(int index, T object) {
-		data[index] = object;
+
+	void Add(T object) {
+		data.push_back(object);
 	}
 
-	//TODO
-	//void Remove(entity) 
-	//s
+	void Set(int entityID, T object) {
+		if (entityIDToIndex.find(entityID) != entityIDToIndex.end()) {
+			//element exists, replace
+			int index = entityIDToIndex[entityID];
+			data[index] = object;
+		}
+		else {
+			//add new obj, track entity IDs to vector index
+			int index = size;
+			entityIDToIndex.emplace(entityID, index);
+			indexToEntityID.emplace(index, entityID);
+
+			if (index >= data.capacity()) {
+				data.resize(size * 2);
+			}
+			data[index] = object;
+			size++;
+		}
+	}
+
+	void Remove(int entityID) {
+		//copy last element to deletion position
+		int indexOfDeletion = entityIDToIndex[entityID];
+		int indexOfLastElement = size - 1;
+		data[indexOfDeletion] = data[indexOfLastElement];
+
+		//update maps to point to correct elements
+		int entityIDOfLastElement = indexToEntityID[indexOfLastElement];
+		entityIDToIndex[entityIDOfLastElement] = indexOfDeletion;
+		indexToEntityID[indexOfDeletion] = entityIDOfLastElement;
+
+		entityIDToIndex.erase(entityID);
+		indexToEntityID.erase(indexOfLastElement);
+		size--;
+	}
+
+	void RemoveEntityFromPool(int entityID) override {
+		if (entityIDToIndex.find(entityID) != entityIDToIndex.end()) {
+			Remove(entityID);
+		}
+	}
 	
 	//TODO
 	//error handling: entityID[entityID] ?
-	T& Get(int index) {
+	T& Get(int entityID) {
+		int index = entityIDToIndex[entityID];
 		return static_cast<T&>(data[index]);
 	}
 	
@@ -400,10 +434,6 @@ void Housecat::AddComponent(Entity entity, TArgs&& ...args) {
 
 	std::shared_ptr<Pool<TComponent>> componentPool = std::static_pointer_cast<Pool<TComponent>>(componentPools[componentID]);
 
-	//resize pool based off num of entity IDs
-	if (entityID >= componentPool->GetSize()) {
-		componentPool->Resize(numOfEntities);
-	}
 
 	TComponent newComponent(std::forward<TArgs>(args)...);
 
@@ -411,7 +441,7 @@ void Housecat::AddComponent(Entity entity, TArgs&& ...args) {
 	//set bitset index to component ID
 	entityComponentSignatures[entityID].set(componentID);
 
-	Logger::Log("Component ID [" + std::to_string(componentID) + "] Added to Entity ID [" + std::to_string(entityID) + "]");
+	//Logger::Log("Component ID [" + std::to_string(componentID) + "] Added to Entity ID [" + std::to_string(entityID) + "]");
 }
 
 template <typename TComponent>
@@ -419,7 +449,11 @@ void Housecat::RemoveComponent(Entity entity) {
 	const auto componentID = Component<TComponent>::GetID();
 	const auto entityID = entity.GetID();
 
+	//removes component from component list for each entity
+	std::shared_ptr<Pool<TComponent>> componentPool = std::static_pointer_cast<Pool<TComponent>>(componentPools[componentID]);
+	componentPool->Remove(entityID);
+
 	entityComponentSignatures[entityID].set(componentID, false);
 
-	Logger::Log("Component ID [" + std::to_string(componentID) + "] Removed from Component ID [" + std::to_string(entityID) + "]");
+	//Logger::Log("Component ID [" + std::to_string(componentID) + "] Removed from Component ID [" + std::to_string(entityID) + "]");
 }

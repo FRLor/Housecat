@@ -87,7 +87,7 @@ Entity Housecat::CreateEntity() {
 
 	if (freedIDs.empty()) {
 		entityID = numOfEntities++;
-		if (entityID >= entityComponentSignatures.size()) {
+		if (static_cast<size_t>(entityID) >= entityComponentSignatures.size()) {
 			entityComponentSignatures.resize(entityID + 1);
 		}
 	}
@@ -212,6 +212,14 @@ void Housecat::Update() {
 	for (auto entity : entitiesToKill) {
 		RemoveEntityFromSystems(entity);
 		entityComponentSignatures[entity.GetID()].reset();
+
+		//remove entity from pool
+		for (auto pool : componentPools) {
+			//fixes null fault
+			if (pool) {
+				pool->RemoveEntityFromPool(entity.GetID());
+			}
+		}
 
 		//reuse that ID
 		freedIDs.push_back(entity.GetID());
