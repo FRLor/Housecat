@@ -280,7 +280,7 @@ void Game::LoadLevel(int level) {
 	fire.AddComponent<AnimationComponent>(8, 10, true);
 	fire.AddComponent<SpriteComponent>("fire", 24, 32, 4);
 	fire.AddComponent<BoxColliderComponent>(15, 5, glm::vec2(25, 32 * 4.2));
-	fire.AddComponent<DamageAreaComponent>(false, 10);
+	fire.AddComponent<DamageAreaComponent>(false, 20, 1.0);
 
 
 
@@ -326,7 +326,7 @@ void Game::Update() {
 	housecat->GetSystem<MovementSystem>().Update(deltaTime);
 	housecat->GetSystem<AnimationSystem>().Update();
 	housecat->GetSystem<CollisionSystem>().Update(eventManager);
-	housecat->GetSystem<DamageSystem>().Update();
+	//housecat->GetSystem<DamageSystem>().Update();
 	housecat->GetSystem<CameraMovementSystem>().Update(camera);
 }
 

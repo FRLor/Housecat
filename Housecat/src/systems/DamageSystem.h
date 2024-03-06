@@ -23,14 +23,16 @@ public:
 	void HandleCollision(CollisionEvent& event) {
 		Entity a = event.a;
 		Entity b = event.b;
-
-		Logger::Debug("Collision!");
 		
 		if (a.HasGroup("hazards") || a.HasGroup("enemy") && b.HasTag("player")) {
-			EntityOnDamageArea(a, b);
+			if (CanApplyDamage(a)) {
+				EntityOnDamageArea(a, b);
+			}
 		}
 		if (b.HasGroup("hazards") || b.HasGroup("enemy") && a.HasTag("player")) {
-			EntityOnDamageArea(b, a);
+			if (CanApplyDamage(b)) {
+				EntityOnDamageArea(b, a);
+			}
 		}
 
 		//REMIND
@@ -42,6 +44,21 @@ public:
 
 		}*/
 
+	}
+
+	bool CanApplyDamage(Entity area) {
+		auto& damageArea = area.GetComponent<DamageAreaComponent>();
+		double currentTime = SDL_GetTicks() / 1000.0;
+
+		//time elapsed since the last damage
+		double timeElapsed = currentTime - damageArea.lastDamageTimer;
+
+		//enough time has passed since the last damage
+		if (timeElapsed >= damageArea.damageDelay) {
+			damageArea.lastDamageTimer = currentTime;
+			return true;
+		}
+		return false;
 	}
 
 	void EntityOnDamageArea(Entity area, Entity entity) {
@@ -58,7 +75,4 @@ public:
 		}
 	}
 
-	void Update() {
-
-	}
 };
