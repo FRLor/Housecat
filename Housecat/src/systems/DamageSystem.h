@@ -10,6 +10,8 @@
 
 #include "../events/CollisionEvent.h"
 
+#include <iostream>
+
 class DamageSystem : public System {
 public:
 	DamageSystem() {
@@ -23,13 +25,14 @@ public:
 	void HandleCollision(CollisionEvent& event) {
 		Entity a = event.a;
 		Entity b = event.b;
-		
-		if (a.HasGroup("hazards") || a.HasGroup("enemy") && b.HasTag("player")) {
+
+		if ((a.HasGroup("hazards") || a.HasGroup("enemy")) && b.HasTag("player")) {
 			if (CanApplyDamage(a)) {
 				EntityOnDamageArea(a, b);
+
 			}
 		}
-		if (b.HasGroup("hazards") || b.HasGroup("enemy") && a.HasTag("player")) {
+		if ((b.HasGroup("hazards") || b.HasGroup("enemy")) && a.HasTag("player")) {
 			if (CanApplyDamage(b)) {
 				EntityOnDamageArea(b, a);
 			}
@@ -73,6 +76,16 @@ public:
 				entity.Kill();
 			}
 		}
+		if (damageArea.isFriendly) {
+			//reduce health of entity
+			auto& health = entity.GetComponent<HealthComponent>();
+			health.healthPercent -= damageArea.hitPercentDamage;
+
+			if (health.healthPercent <= 0) {
+				entity.Kill();
+			}
+		}
 	}
+
 
 };

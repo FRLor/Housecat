@@ -24,6 +24,9 @@ private:
 
 	SDL_Rect camera;
 
+	//ImGui
+	ImGuiContext* gameContext;
+
 	//managers
 	std::unique_ptr<Housecat> housecat;
 	std::unique_ptr<AssetManager> assetManager;

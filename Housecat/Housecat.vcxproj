@@ -75,8 +75,8 @@
     <LibraryPath>C:\SDL2\lib\x64;C:\Game Engine\Housecat\Housecat\libs\lua;C:\Game Engine\Housecat\Housecat\libs\imgui;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\SDL2\include;C:\Game Engine\Housecat\Housecat\libs;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Game Engine\Housecat\Housecat\libs\imgui;C:\SDL2\include;C:\Game Engine\Housecat\Housecat\libs;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\SDL2\lib\x86;C:\Game Engine\Housecat\Housecat\libs\imgui;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -139,6 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="libs\imgui\imconfig.h" />
+    <ClInclude Include="libs\imgui\imgui.h" />
+    <ClInclude Include="libs\imgui\imgui_impl_sdl2.h" />
+    <ClInclude Include="libs\imgui\imgui_impl_sdlrenderer2.h" />
+    <ClInclude Include="libs\imgui\imgui_internal.h" />
+    <ClInclude Include="libs\imgui\imstb_rectpack.h" />
+    <ClInclude Include="libs\imgui\imstb_textedit.h" />
+    <ClInclude Include="libs\imgui\imstb_truetype.h" />
     <ClInclude Include="src\components\CameraComponent.h" />
     <ClInclude Include="src\components\DamageAreaComponent.h" />
     <ClInclude Include="src\components\HealthComponent.h" />
@@ -162,10 +170,10 @@
     <ClInclude Include="src\systems\DamageSystem.h" />
     <ClInclude Include="src\systems\KeyboardInputSystem.h" />
     <ClInclude Include="src\systems\RenderColliderSystem.h" />
+    <ClInclude Include="src\systems\RenderImGuiSystem.h" />
     <ClInclude Include="src\systems\RenderSystem.h" />
     <ClInclude Include="src\systems\MovementSystem.h" />
     <ClInclude Include="src\Source.h" />
-    <ClInclude Include="src\input\GlobalInputHandler.h" />
     <ClInclude Include="src\editor\Editor.h" />
     <ClInclude Include="src\logger\Logger.h" />
     <ClInclude Include="src\game\Game.h" />
@@ -410,14 +418,6 @@
     <ClInclude Include="libs\glm\vec3.hpp" />
     <ClInclude Include="libs\glm\vec4.hpp" />
     <ClInclude Include="libs\glm\vector_relational.hpp" />
-    <ClInclude Include="libs\imgui\imconfig.h" />
-    <ClInclude Include="libs\imgui\imgui.h" />
-    <ClInclude Include="libs\imgui\imgui_impl_sdl.h" />
-    <ClInclude Include="libs\imgui\imgui_internal.h" />
-    <ClInclude Include="libs\imgui\imgui_sdl.h" />
-    <ClInclude Include="libs\imgui\imstb_rectpack.h" />
-    <ClInclude Include="libs\imgui\imstb_textedit.h" />
-    <ClInclude Include="libs\imgui\imstb_truetype.h" />
     <ClInclude Include="libs\lua\lauxlib.h" />
     <ClInclude Include="libs\lua\lua.h" />
     <ClInclude Include="libs\lua\lua.hpp" />
@@ -578,21 +578,21 @@
     <None Include="SDL2_ttf.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="libs\imgui\imgui.cpp" />
+    <ClCompile Include="libs\imgui\imgui_demo.cpp" />
+    <ClCompile Include="libs\imgui\imgui_draw.cpp" />
+    <ClCompile Include="libs\imgui\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="libs\imgui\imgui_impl_sdlrenderer2.cpp" />
+    <ClCompile Include="libs\imgui\imgui_tables.cpp" />
+    <ClCompile Include="libs\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\eventmanager\EventManager.cpp" />
     <ClCompile Include="src\assetmanager\AssetManager.cpp" />
     <ClCompile Include="src\ecs\ECS.cpp" />
     <ClCompile Include="src\Source.cpp" />
-    <ClCompile Include="src\input\GlobalInputHandler.cpp" />
     <ClCompile Include="src\editor\Editor.cpp" />
     <ClCompile Include="src\logger\Logger.cpp" />
     <ClCompile Include="src\game\Game.cpp" />
     <ClCompile Include="libs\glm\detail\glm.cpp" />
-    <ClCompile Include="libs\imgui\imgui.cpp" />
-    <ClCompile Include="libs\imgui\imgui_demo.cpp" />
-    <ClCompile Include="libs\imgui\imgui_draw.cpp" />
-    <ClCompile Include="libs\imgui\imgui_impl_sdl.cpp" />
-    <ClCompile Include="libs\imgui\imgui_sdl.cpp" />
-    <ClCompile Include="libs\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>

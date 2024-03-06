@@ -58,7 +58,7 @@ public:
 				);
 				//REMIND TESTING
 				if (hasCollided) {
-					Logger::Log("Entity [" + std::to_string(entityA.GetID()) + "] Collided With [" + std::to_string(entityB.GetID()) + "]");
+					//Logger::Log("Entity [" + std::to_string(entityA.GetID()) + "] Collided With [" + std::to_string(entityB.GetID()) + "]");
 
 					eventManager->TriggerEvent<CollisionEvent>(entityA, entityB);
 				}
