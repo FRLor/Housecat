@@ -151,6 +151,7 @@
     <ClInclude Include="src\components\DamageAreaComponent.h" />
     <ClInclude Include="src\components\HealthComponent.h" />
     <ClInclude Include="src\components\MovementStateComponent.h" />
+    <ClInclude Include="src\components\TextDisplayComponent.h" />
     <ClInclude Include="src\components\UserControlComponent.h" />
     <ClInclude Include="src\eventmanager\EventManager.h" />
     <ClInclude Include="resource.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="src\systems\DamageSystem.h" />
     <ClInclude Include="src\systems\KeyboardInputSystem.h" />
     <ClInclude Include="src\systems\RenderColliderSystem.h" />
+    <ClInclude Include="src\systems\RenderHealthSystem.h" />
     <ClInclude Include="src\systems\RenderImGuiSystem.h" />
     <ClInclude Include="src\systems\RenderSystem.h" />
     <ClInclude Include="src\systems\MovementSystem.h" />
@@ -425,6 +427,7 @@
     <ClInclude Include="libs\lua\lualib.h" />
     <ClInclude Include="libs\sol\sol.hpp" />
     <ClInclude Include="src\components\TransformComponent.h" />
+    <ClInclude Include="src\systems\RenderTextSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\tilemaps\map_test.map" />
