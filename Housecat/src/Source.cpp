@@ -3,7 +3,9 @@
 
 
 #include <SDL_ttf.h>
-#include <imgui/imgui_sdl.h>
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_sdl2.h>
+#include <imgui/imgui_impl_sdlrenderer2.h>
 
 int Source::windowSourceWidth;
 int Source::windowSourceHeight;
@@ -29,6 +31,7 @@ Source::Source()
 }
 
 Source::~Source() {
+
 	Logger::Lifecycle("Source Destructor Called!");
 }
 
@@ -71,8 +74,12 @@ void Source::Initialize() {
 	SDL_SetWindowFullscreen(windowSource, SDL_FALSE);
 	isRunning = true;
 
+	IMGUI_CHECKVERSION();
 	sourceImGuiContext = ImGui::CreateContext();
-	ImGuiSDL::Initialize(rendererSource, windowSourceWidth, windowSourceHeight);
+	ImGui_ImplSDL2_InitForSDLRenderer(windowSource, rendererSource);
+	ImGui_ImplSDLRenderer2_Init(rendererSource);
+
+	//ImGuiSDL::Initialize(rendererSource, windowSourceWidth, windowSourceHeight);
 
 	//TODO? Add custom font montserrat | roboto
 }
@@ -87,7 +94,7 @@ void Source::Input() {
 	while (SDL_PollEvent(&sdlSourceEvent)) {
 		//handle ImGui SDL input
 		ImGui_ImplSDL2_ProcessEvent(&sdlSourceEvent);
-		ImGuiIO& IO = ImGui::GetIO();
+		ImGuiIO& IO = ImGui::GetIO(); (void)IO;
 
 		int mouseX, mouseY;
 		const int buttons = SDL_GetMouseState(&mouseX, &mouseY);
@@ -134,7 +141,10 @@ void Source::Render() {
 
 	ImGui::SetCurrentContext(sourceImGuiContext);
 
+	ImGui_ImplSDLRenderer2_NewFrame();
+	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
+
 	//ImGui::ShowDemoWindow();
 	ImGuiWindowFlags windowFlags = (
 		ImGuiWindowFlags_NoTitleBar,
@@ -175,9 +185,10 @@ void Source::Render() {
 	ImGui::End();
 
 	ImGui::Render();
-	ImGuiSDL::Render(ImGui::GetDrawData());
+	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
+	//ImGuiSDL::Render(ImGui::GetDrawData());
 
-	ImGui::EndFrame();
+	//ImGui::EndFrame();
 	SDL_RenderPresent(rendererSource);
 
 }
@@ -189,12 +200,14 @@ void Source::Run() {
 		Input();
 		Update();
 		Render();
-	} 
+	}
 }
 
 void Source::Destroy() {
-	ImGuiSDL::Deinitialize();
+	ImGui_ImplSDLRenderer2_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
+
 	SDL_DestroyRenderer(rendererSource);
 	SDL_DestroyWindow(windowSource);
 	SDL_Quit();
