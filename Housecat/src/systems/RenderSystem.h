@@ -33,7 +33,17 @@ public:
 			renderableEntity.transformComponent = entity.GetComponent<TransformComponent>();
 			renderableEntity.spriteComponent = entity.GetComponent<SpriteComponent>();
 
-			renderableEntities.emplace_back(renderableEntity);
+			//culling entities outside of camera
+			bool EntityOutOfView = {
+				renderableEntity.transformComponent.position.x > camera.x + camera.w ||
+				renderableEntity.transformComponent.position.x + (renderableEntity.transformComponent.scale.x * renderableEntity.spriteComponent.width) < camera.x ||
+				renderableEntity.transformComponent.position.y > camera.y + camera.h ||
+				renderableEntity.transformComponent.position.y + (renderableEntity.transformComponent.scale.y * renderableEntity.spriteComponent.height) < camera.y
+			};
+
+			if (!EntityOutOfView) {
+				renderableEntities.emplace_back(renderableEntity);
+			}
 		}
 
 		//sort by z index
