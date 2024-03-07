@@ -41,7 +41,8 @@ public:
 				renderableEntity.transformComponent.position.y + (renderableEntity.transformComponent.scale.y * renderableEntity.spriteComponent.height) < camera.y
 			};
 
-			if (!EntityOutOfView) {
+			//culling entities outside and non fixed sprites
+			if (!EntityOutOfView && !renderableEntity.spriteComponent.isFixed) {
 				renderableEntities.emplace_back(renderableEntity);
 			}
 		}
