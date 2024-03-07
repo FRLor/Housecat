@@ -201,7 +201,7 @@ public:
 			entityIDToIndex.emplace(entityID, index);
 			indexToEntityID.emplace(index, entityID);
 
-			if (index >= data.capacity()) {
+			if (static_cast<size_t>(index) >= data.capacity()) {
 				data.resize(size * 2);
 			}
 			data[index] = object;
