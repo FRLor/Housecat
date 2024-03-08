@@ -5,19 +5,27 @@
 #include <memory>
 
 #include "TileAttributes.h"
+#include "Canvas.h"
+
+#include "../utilities/SDLToolKit.h"
+#include "../editmanager/EditManager.h"
 
 #include "../../ecs/ECS.h"
-
-#include "../editmanager/EditManager.h"
+#include "../../assetmanager/AssetManager.h"
 
 class ImGuiFunctions: public System {
 private:
 	//tile
 	TileAttributes tileAttributes;
+	TileAttributes tilePrevAttributes;
 	int tileWidth;
 	int tileHeight;
 	int textureWidth;
 	int textureHeight;
+
+	//edit
+	bool Undo;
+	bool Redo;
 
 	//project
 	std::string file;
@@ -33,20 +41,34 @@ private:
 public:
 	ImGuiFunctions();
 	~ImGuiFunctions();
+	
+	//TODO
+	//ImGui
+	void InitImGui();
 
 	//TODO
 	//project management
-	void ShowFileMenu();
+	void ShowFileMenu(EditorRenderer& renderer, const AssetManagerPtr& assetManager, std::shared_ptr<Canvas>& canvas, int& tileSize);
 
-	void ShowToolsMenu();
+	void ShowEditMenu();
+
+	void ShowViewMenu();
+
+	void ShowProjectMenu(EditorRenderer& renderer, const AssetManagerPtr& assetManager);
 
 	//TODO
 	//file management
 	void NewProject();
 
-	void OpenProject();
+	void OpenProject(EditorRenderer& renderer, const AssetManagerPtr& assetManager, std::shared_ptr<Canvas>& canvas, int& tileSize);
 
-	void Save();
+	void Save(EditorRenderer& renderer, const AssetManagerPtr& assetManager, const int& canvasWidth, const int& canvasHeight, int& tileSize);
+
+	//TODO
+	//tileset management
+	void TileAttributes(const AssetManagerPtr& assetManager);
+
+	void SetTileset(const AssetManagerPtr& assetManager);
 
 	//TODO
 	//shortcut management

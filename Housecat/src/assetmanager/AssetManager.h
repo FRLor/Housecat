@@ -7,6 +7,8 @@
 #include <string>
 #include <memory>
 
+#include "../editor/utilities/SDLToolKit.h"
+
 class AssetManager {
 private:
 	std::map<std::string, SDL_Texture*> textures;
