@@ -2,10 +2,13 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "TileAttributes.h"
 
 #include "../../ecs/ECS.h"
+
+#include "../editmanager/EditManager.h"
 
 class ImGuiFunctions: public System {
 private:
