@@ -147,6 +147,7 @@
     <ClInclude Include="libs\imgui\imstb_rectpack.h" />
     <ClInclude Include="libs\imgui\imstb_textedit.h" />
     <ClInclude Include="libs\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\editor\mouse\Mouse.h" />
     <ClInclude Include="src\editor\editmanager\EditManager.h" />
     <ClInclude Include="src\editor\rendering\ImGuiFunctions.h" />
     <ClInclude Include="src\components\CameraComponent.h" />
@@ -594,6 +595,7 @@
     <ClCompile Include="libs\imgui\imgui_impl_sdlrenderer2.cpp" />
     <ClCompile Include="libs\imgui\imgui_tables.cpp" />
     <ClCompile Include="libs\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\editor\mouse\Mouse.cpp" />
     <ClCompile Include="src\editor\editmanager\EditManager.cpp" />
     <ClCompile Include="src\editor\rendering\ImGuiFunctions.cpp" />
     <ClCompile Include="src\editor\rendering\ImGuiRendering.cpp" />
