@@ -14,6 +14,7 @@ ImGuiFunctions::ImGuiFunctions()
 	tileHeight(16),
 	textureWidth(0),
 	textureHeight(0),
+	isImageLoaded(false),
 	Undo(false),
 	Redo(false),
 	file(""),
@@ -119,13 +120,38 @@ void ImGuiFunctions::Save(EditorRenderer& renderer, const AssetManagerPtr& asset
 
 //TODO
 //tileset management
+void ImGuiFunctions::TilesetWindow(const AssetManagerPtr& assetManager) {
+	if (ImGui::Begin("Tileset"), isImageLoaded) {
+		int imageWidth = textureWidth;
+		int imageHeight = textureHeight;
+
+		ImGui::Image(assetManager->GetTexture(assetID), ImVec2(imageWidth, imageHeight));
+
+		//TODO MOUSE HOVER!
+		int tileCol = imageWidth / tileWidth;
+		int tileRow = imageHeight / tileHeight;
+
+		//render tileset textures
+		for (int i = 0; i < tileCol; i++) {
+			for (int j = 0; j < tileRow; j++) {
+				
+			}
+		}			
+	}
+	ImGui::End();
+}
+
+void ImGuiFunctions::TilesetLayers(const AssetManagerPtr& assetManager) {
+
+}
+
 void ImGuiFunctions::TileAttributes(const AssetManagerPtr& assetManager) {
 
 }
 
-void ImGuiFunctions::SetTileset(const AssetManagerPtr& assetManager) {
 
-}
+
+
 
 
 //TODO

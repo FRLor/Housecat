@@ -22,6 +22,8 @@ private:
 	int tileHeight;
 	int textureWidth;
 	int textureHeight;
+	bool isImageLoaded;
+
 
 	//edit
 	bool Undo;
@@ -66,9 +68,12 @@ public:
 
 	//TODO
 	//tileset management
+	void TilesetWindow(const AssetManagerPtr& assetManager);
+
+	void TilesetLayers(const AssetManagerPtr& assetManager);
+
 	void TileAttributes(const AssetManagerPtr& assetManager);
 
-	void SetTileset(const AssetManagerPtr& assetManager);
 
 	//TODO
 	//shortcut management
