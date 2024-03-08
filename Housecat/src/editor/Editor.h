@@ -5,8 +5,13 @@
 #include <imgui/imgui_impl_sdl2.h>
 #include <imgui/imgui_impl_sdlrenderer2.h>
 
-const int EDITOR_FPS = 144;
-const int EDITOR_MILLISECS_PER_FRAME = 1000 / EDITOR_FPS;
+#include "./utilities/SDLToolkit.h"
+
+#include "../assetmanager/AssetManager.h"
+
+
+
+
 
 class Editor {
 private:
@@ -14,10 +19,29 @@ private:
 
 	int millisecsPreviousFrame;
 
-	SDL_Window* windowEditor;
-	SDL_Renderer* rendererEditor;
+	//SDL_Window* windowEditor;
+	//SDL_Renderer* rendererEditor;
+	EditorWindow editorWindow;
+	EditorRenderer editorRenderer;
 
+	//ImGui
 	ImGuiContext* editorImGuiContext;
+
+	//AssetManager ptr
+	AssetManagerPtr assetManager;
+
+	//TODO
+	//mouse
+	//camera
+	//events?
+
+	//editor window
+	static const int windowBar = 25;
+	static const int windowEditorWidth = 1920;
+	static const int windowEditorHeight = 1080 - windowBar;
+
+	const int EDITOR_FPS = 144;
+	const int EDITOR_MILLISECS_PER_FRAME = 1000 / EDITOR_FPS;
 
 public:
 	Editor();
@@ -35,9 +59,6 @@ public:
 	void SetRunning(bool running) { isRunning = running; }
 
 	auto GetWindowID();
-
-	static int windowEditorWidth;
-	static int windowEditorHeight;
 
 };
 

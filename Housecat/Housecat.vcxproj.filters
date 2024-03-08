@@ -873,6 +873,12 @@
     <ClInclude Include="src\systems\RenderImGuiSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\editor\rendering\ImGuiRendering.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\editor\utilities\SDLToolKit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="libs\glm\detail\func_common.inl">
@@ -1336,6 +1342,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="libs\imgui\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editor\rendering\ImGuiRendering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

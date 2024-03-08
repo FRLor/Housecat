@@ -1,9 +1,11 @@
 #pragma once
 
-#include <map>
 #include <SDL.h>
 #include <SDL_ttf.h>
+
+#include <map>
 #include <string>
+#include <memory>
 
 class AssetManager {
 private:
@@ -19,12 +21,16 @@ public:
 	AssetManager();
 	~AssetManager();
 
+	//textures
 	SDL_Texture* GetTexture(const std::string& assetID);
 	void AddTexture(SDL_Renderer* renderer, const std::string& assetID, const std::string& filePath);
 	void ClearAssets();
 
+	//fonts
 	TTF_Font* GetFont(const std::string& assetID);
-
 	void AddFont(const std::string& assetID, const std::string& filePath, int fontSize);
 
 };
+
+//ptr for Editor
+typedef std::unique_ptr<AssetManager> AssetManagerPtr;

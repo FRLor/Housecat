@@ -1,7 +1,10 @@
+#include <SDL_image.h>
+
+
 #include "AssetManager.h"
+
 #include "../logger/Logger.h"
  
-#include <SDL_image.h>
 
 AssetManager::AssetManager() {
 	Logger::Lifecycle("AssetManager Constructor Called!");
