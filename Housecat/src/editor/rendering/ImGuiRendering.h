@@ -15,6 +15,7 @@ private:
 	int gridY;
 
 	std::shared_ptr<class Canvas> canvas;
+	std::shared_ptr<class ImGuiFunctions> imguiFunctions;
 
 public:
 	ImGuiRendering();

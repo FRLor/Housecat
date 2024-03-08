@@ -1,12 +1,13 @@
 #pragma once
 
 #include <string>
-
-
-#include "TileAttributes.h"
 #include <vector>
 
-class ImGuiFunctions {
+#include "TileAttributes.h"
+
+#include "../../ecs/ECS.h"
+
+class ImGuiFunctions: public System {
 private:
 	//tile
 	TileAttributes tileAttributes;
@@ -22,6 +23,8 @@ private:
 	//tilesets
 	std::vector<std::string> tilesets;
 	std::vector<std::string> tilesetsTarget;
+
+	std::unique_ptr<class EditManager> editManager;
 
 
 public:
