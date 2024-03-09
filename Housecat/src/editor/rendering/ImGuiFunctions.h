@@ -9,6 +9,7 @@
 
 #include "../utilities/SDLToolKit.h"
 #include "../editmanager/EditManager.h"
+#include "../mouse/Mouse.h"
 
 #include "../../ecs/ECS.h"
 #include "../../assetmanager/AssetManager.h"
@@ -39,9 +40,10 @@ private:
 
 	std::unique_ptr<class EditManager> editManager;
 
+	std::shared_ptr<class Mouse> mouse;
 
 public:
-	ImGuiFunctions();
+	ImGuiFunctions(class std::shared_ptr<Mouse>& mouse);
 	~ImGuiFunctions();
 	
 	//TODO
@@ -56,7 +58,7 @@ public:
 
 	void ShowViewMenu();
 
-	void ShowProjectMenu(EditorRenderer& renderer, const AssetManagerPtr& assetManager);
+	void ShowProjectMenu(EditorRenderer& renderer, const AssetManagerPtr& assetManager, std::shared_ptr<class Mouse>& mouse);
 
 	//TODO
 	//file management
@@ -68,11 +70,11 @@ public:
 
 	//TODO
 	//tileset management
-	void TilesetWindow(const AssetManagerPtr& assetManager);
+	void TilesetWindow(const AssetManagerPtr& assetManager, const glm::vec2& mouseRect);
 
 	void TilesetLayers(const AssetManagerPtr& assetManager);
 
-	void TileAttributes(const AssetManagerPtr& assetManager);
+	void TileAttributes(const AssetManagerPtr& assetManager, std::shared_ptr<class Mouse>& mouse);
 
 
 	//TODO

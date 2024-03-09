@@ -11,6 +11,8 @@ struct TileAttributes {
 	glm::vec2 tileOffset;
 	int srcRectX;
 	int srcRectY;
+	int mouseRectX;
+	int mouseRectY;
 
 	//TODO
 	//animated tiles
@@ -19,7 +21,10 @@ struct TileAttributes {
 
 	//bool isLooped;
 
-	TileAttributes(int tileWidth = 16, int tileHeight = 16, int scaleX = 1, int scaleY = 1, int layer = 0, glm::vec2 tileOffset = { 0, 0 }, int srcRectX = 0, int srcRectY = 0) {
+	TileAttributes(int tileWidth = 16, int tileHeight = 16, int scaleX = 1, int scaleY = 1,
+		int layer = 0, glm::vec2 tileOffset = { 0, 0 }, int srcRectX = 0, int srcRectY = 0,
+		int mouseRectX = 16, int mouseRectY = 16) {
+
 		this->tileWidth = tileWidth;
 		this->tileHeight = tileHeight;
 		this->scaleX = scaleX;
@@ -28,6 +33,8 @@ struct TileAttributes {
 		this->tileOffset = tileOffset;
 		this->srcRectX = srcRectX;
 		this->srcRectY = srcRectY;
+		this->mouseRectX = mouseRectX;
+		this->mouseRectY = mouseRectY;
 	}	
 
 	~TileAttributes() = default;	
