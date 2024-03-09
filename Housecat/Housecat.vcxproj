@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\editor\utilities\EditCanvasSize.h" />
     <ClInclude Include="libs\imgui\imconfig.h" />
     <ClInclude Include="libs\imgui\imgui.h" />
     <ClInclude Include="libs\imgui\imgui_impl_sdl2.h" />
@@ -148,7 +149,7 @@
     <ClInclude Include="libs\imgui\imstb_textedit.h" />
     <ClInclude Include="libs\imgui\imstb_truetype.h" />
     <ClInclude Include="src\editor\mouse\Mouse.h" />
-    <ClInclude Include="src\editor\editmanager\EditManager.h" />
+    <ClInclude Include="src\editor\utilities\editmanager\EditManager.h" />
     <ClInclude Include="src\editor\rendering\ImGuiFunctions.h" />
     <ClInclude Include="src\components\CameraComponent.h" />
     <ClInclude Include="src\components\DamageAreaComponent.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="src\editor\rendering\Canvas.h" />
     <ClInclude Include="src\editor\rendering\ImGuiRendering.h" />
     <ClInclude Include="src\editor\rendering\TileAttributes.h" />
+    <ClInclude Include="src\editor\utilities\EditTile.h" />
     <ClInclude Include="src\editor\utilities\SDLToolKit.h" />
     <ClInclude Include="src\eventmanager\EventManager.h" />
     <ClInclude Include="resource.h" />
@@ -588,6 +590,7 @@
     <None Include="SDL2_ttf.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\editor\utilities\EditCanvasSize.cpp" />
     <ClCompile Include="libs\imgui\imgui.cpp" />
     <ClCompile Include="libs\imgui\imgui_demo.cpp" />
     <ClCompile Include="libs\imgui\imgui_draw.cpp" />
@@ -596,9 +599,10 @@
     <ClCompile Include="libs\imgui\imgui_tables.cpp" />
     <ClCompile Include="libs\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\editor\mouse\Mouse.cpp" />
-    <ClCompile Include="src\editor\editmanager\EditManager.cpp" />
+    <ClCompile Include="src\editor\utilities\editmanager\EditManager.cpp" />
     <ClCompile Include="src\editor\rendering\ImGuiFunctions.cpp" />
     <ClCompile Include="src\editor\rendering\ImGuiRendering.cpp" />
+    <ClCompile Include="src\editor\utilities\EditTile.cpp" />
     <ClCompile Include="src\eventmanager\EventManager.cpp" />
     <ClCompile Include="src\assetmanager\AssetManager.cpp" />
     <ClCompile Include="src\ecs\ECS.cpp" />

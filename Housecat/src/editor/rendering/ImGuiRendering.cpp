@@ -123,7 +123,7 @@ void ImGuiRendering::Update(EditorRenderer& renderer, const AssetManagerPtr& ass
 	
 }
 
-void ImGuiRendering::RenderGrid(SDL_Renderer& renderer, SDL_Rect& camera, const float& zoom) {
+void ImGuiRendering::RenderGrid(EditorRenderer& renderer, SDL_Rect& camera, const float& zoom) {
 	//render
 	//for tiles y
 	//for tiles x

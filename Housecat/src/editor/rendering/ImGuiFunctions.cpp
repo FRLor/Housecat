@@ -4,7 +4,7 @@
 #include "ImGuiFunctions.h"
 
 #include "../utilities/SDLToolkit.h"
-#include "../editmanager/EditManager.h"
+#include "../utilities/editmanager/EditManager.h"
 
 ImGuiFunctions::ImGuiFunctions(class std::shared_ptr<Mouse>& mouse)
 	//int tileWidth, tileHeight, scaleX, scaleY, layer, tileOffset, srcRectX, srcRectY
