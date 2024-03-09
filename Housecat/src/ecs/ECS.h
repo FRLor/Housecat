@@ -283,10 +283,6 @@ private:
 	//lists freed entity IDs
 	std::deque<int> freedIDs;
 
-	//TODO?
-	//std::shared_ptr<Housecat> housecat;
-
-
 
 public:
 	Housecat() {
@@ -321,6 +317,13 @@ public:
 	std::vector<Entity> GetGroup(const std::string& group) const;
 
 	void Update();
+
+	//singleton pattern
+	//for Editor
+	static Housecat& GetInstance();
+	Housecat(const Housecat&) = delete;
+	Housecat& operator=(const Housecat&) = delete;
+
 
 	//Component management
 	template <typename TComponent> bool HasComponent(Entity entity) const;
