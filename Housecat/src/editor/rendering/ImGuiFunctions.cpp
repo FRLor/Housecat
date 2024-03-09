@@ -38,6 +38,11 @@ void ImGuiFunctions::InitImGui() {
 	//ImGui
 }
 
+void ImGuiFunctions::Setup() {
+	//TODO
+	//ImGui
+}
+
 //TODO
 //menu bar management
 void ImGuiFunctions::ShowFileMenu(EditorRenderer& renderer, const AssetManagerPtr& assetManager, std::shared_ptr<Canvas>& canvas, int& tileSize) {
