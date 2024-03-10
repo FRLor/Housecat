@@ -253,7 +253,8 @@ void Game::LoadLevel(int level) {
 	Entity player = housecat->CreateEntity();
 	Entity ghost = housecat->CreateEntity();
 
-	Entity chest = housecat->CreateEntity();
+	Entity chestR = housecat->CreateEntity();
+	Entity chestL = housecat->CreateEntity();
 	Entity fire = housecat->CreateEntity();
 
 	Entity healthLabel = housecat->CreateEntity();
@@ -326,10 +327,15 @@ void Game::LoadLevel(int level) {
 	fire.AddComponent<DamageAreaComponent>(false, 20, 1.0);
 
 
+	chestR.Group("barriers");
+	chestR.AddComponent<TransformComponent>(glm::vec2(600, 280), glm::vec2(3.0, 3.0), 0.0);
+	chestR.AddComponent<SpriteComponent>("chest", 37, 32, 5);
+	chestR.AddComponent<BoxColliderComponent>(37, 32);
 
-	chest.AddComponent<TransformComponent>(glm::vec2(540, 100), glm::vec2(3.0, 3.0), 0.0);
-	chest.AddComponent<SpriteComponent>("chest", 37, 32, 1);
-	chest.AddComponent<BoxColliderComponent>(37, 32);
+	chestL.Group("barriers");
+	chestL.AddComponent<TransformComponent>(glm::vec2(0, 280), glm::vec2(3.0, 3.0), 0.0);
+	chestL.AddComponent<SpriteComponent>("chest", 37, 32, 5);
+	chestL.AddComponent<BoxColliderComponent>(37, 32);
 
 	SDL_Color red = { 255, 0, 0 };
 	healthLabel.AddComponent<TextDisplayComponent>("montserrat", glm::vec2(5, 5), true, "Housecat", red);
