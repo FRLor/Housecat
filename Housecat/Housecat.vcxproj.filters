@@ -879,9 +879,6 @@
     <ClInclude Include="src\editor\utilities\SDLToolKit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\editor\editmanager\EditManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\editor\rendering\ImGuiFunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -901,6 +898,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\editor\mouse\Mouse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\editor\utilities\EditCanvasSize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\editor\utilities\editmanager\EditManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\editor\utilities\EditTile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1318,6 +1324,7 @@
     <None Include="SDL2_ttf.dll" />
     <None Include="Housecat.aps" />
     <None Include="assets\tilemaps\map_test.map" />
+    <None Include="assets\scripts\Level1Test.lua" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="libs\glm\detail\glm.cpp">
@@ -1371,13 +1378,19 @@
     <ClCompile Include="src\editor\rendering\ImGuiRendering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\editor\editmanager\EditManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\editor\rendering\ImGuiFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\editor\mouse\Mouse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editor\utilities\EditCanvasSize.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editor\utilities\editmanager\EditManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editor\utilities\EditTile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
