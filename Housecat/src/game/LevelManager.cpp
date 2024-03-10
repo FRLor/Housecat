@@ -17,6 +17,7 @@
 #include "../components/DamageAreaComponent.h"
 #include "../components/TextDisplayComponent.h"
 
+
 LevelManager::LevelManager() {
 	Logger::Lifecycle("LevelManager Constructor Called!");
 }
@@ -25,13 +26,21 @@ LevelManager::~LevelManager() {
 	Logger::Lifecycle("LevelManager Destructor Called!");
 }
 
-void LevelManager::LoadLevel(const std::unique_ptr<Housecat>& housecat, SDL_Renderer* rendererGame, const std::unique_ptr<AssetManager>& assetManager, int level) {
-	//SOL for lua
-	sol::state lua;
-	//lua lib
-	lua.open_libraries(sol::lib::base);
+void LevelManager::LoadLevel(const std::unique_ptr<Housecat>& housecat, SDL_Renderer* rendererGame, const std::unique_ptr<AssetManager>& assetManager, sol::state& lua, int level) {
+
 
 	//TODO
+	//REMIND
+	//("Level1Test.lua") is a placeholder for now -> ("./assets/scripts/Level" + to_string(level) + ".lua")
+	sol::load_result luaScript = lua.load_file("./assets/scripts/Level1Test.lua");
+	if (!luaScript.valid()) {
+		sol::error err = luaScript;
+		std::string errorMsg = err.what();
+		Logger::Error("Error loading Lua Script: " + errorMsg);
+		return;
+	}
+
+	lua.script_file("./assets/scripts/Level1Test.lua");
 
 
 

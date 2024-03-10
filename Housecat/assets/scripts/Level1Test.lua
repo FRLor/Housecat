@@ -14,6 +14,8 @@ Level = {
         { type = "texture", id = "player", file = "./assets/textures/cat_sprite_2.png" },
         { type = "texture", id = "ghost", file = "./assets/textures/ghost.png" },
 
+        { type = "texture", id = "map", file = "./assets/tilemaps/tilemap.png" },
+
         { type = "font", id = "roboto", file = "./assets/fonts/roboto.regular.ttf", font_size = 18 },
         { type = "font", id = "montserrat", file = "./assets/fonts/montserrat.bold.ttf", font_size = 20 }
     },
@@ -25,7 +27,7 @@ Level = {
         mapFile = "./assets/tilemaps/map_test.map",
         textureID = "map",
         tileSize = 32,
-        tileScale = 2.0
+        tileScale = 2.0,
         tileCols = 40,
         tileRows = 40,
     },
