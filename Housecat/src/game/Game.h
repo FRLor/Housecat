@@ -2,6 +2,10 @@
 
 #include <SDL.h>
 
+#include <imgui.h>
+
+#include "LevelManager.h"
+
 #include "../ecs/ECS.h"
 
 #include "../assetmanager/AssetManager.h"
@@ -31,6 +35,7 @@ private:
 	std::unique_ptr<Housecat> housecat;
 	std::unique_ptr<AssetManager> assetManager;
 	std::unique_ptr<EventManager> eventManager;
+	std::unique_ptr<LevelManager> levelManager;
 
 public:
 	Game();
@@ -51,7 +56,6 @@ public:
 	void Initialize();
 
 	void Run();
-	void LoadLevel(int level);
 	void Setup();
 	void Input();
 	void Update();
