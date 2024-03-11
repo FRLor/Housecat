@@ -1,9 +1,9 @@
-# Housecat Game Engine 
-Housecat is a lightweight and modular game engine designed to provide developers with a flexible and efficient framework for building 2D games. 
+![Housecat banner](https://github.com/FRLor/Housecat/assets/160707192/3004f416-ce51-49d0-aa01-1706a56d6407)
+
+`Housecat` is a lightweight and modular game engine designed to provide developers with a flexible and efficient framework for building 2D games. 
 At its core, it utilizes the Entity-Component-System (ECS) architecture, offering easier game object management and allowing for easy scalability and extensibility.
 
-![Static Badge](https://img.shields.io/badge/In%20Development-green?style=flat-square&link=https%3A%2F%2Fgithub.com%2FFRLor%2FHousecat)
-
+![Static Badge](https://img.shields.io/badge/In%20Development%20-%20green?style=plastic&link=https%3A%2F%2Fgithub.com%2FFRLor%2FHousecat) &nbsp;&nbsp;&nbsp;
 
 
 # Table of Contents
