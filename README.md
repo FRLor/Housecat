@@ -42,6 +42,7 @@ At its core, it utilizes the Entity-Component-System (ECS) architecture, offerin
 - **Housecat Manager:**
 - **Asset Manager:**
 - **Event Manager:**
+- **Lua Script:**
   ...
 # Documentation
    For detailed documentation on how to use Housecat, refer to the documentation link provided.
