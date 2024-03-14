@@ -38,6 +38,11 @@ public:
 	//sounds
 	Mix_Music* GetMusic(const std::string& assetID);
 	void AddMusic(const std::string& assetID, const std::string& filePath);
+	void PlayMusic(const std::string& assetID, int loops);
+	void SetVolume(int volume);
+	void PauseMusic();
+	void StopMusic();
+
 	//SFX
 	Mix_Chunk* GetSFX(const std::string& assetID);
 	void AddSFX(const std::string& assetID, const std::string& filePath);

@@ -75,6 +75,28 @@ void AssetManager::AddMusic(const std::string& assetID, const std::string& fileP
 	musics.emplace(assetID, music);
 }
 
+void AssetManager::PlayMusic(const std::string& assetID, int loops) {
+	Mix_Music* music = musics[assetID];
+	if (music) {
+		Mix_PlayMusic(music, loops);
+	}
+	else {
+		Logger::Error("Failed to Play Music: " + std::string(Mix_GetError()));
+	}
+}
+
+void AssetManager::SetVolume(int volume) {
+	Mix_VolumeMusic(volume);
+}
+
+void AssetManager::PauseMusic() {
+	Mix_PauseMusic();
+}
+void AssetManager::StopMusic() {
+	Mix_HaltMusic();
+}
+
+
 //SFX
 Mix_Chunk* AssetManager::GetSFX(const std::string& assetID) {
 	return sounds[assetID];
