@@ -19,14 +19,6 @@ Source::Source()
 	rendererSource(nullptr),
 	sourceImGuiContext(0) {
 
-	//REMIND TESTING
-	//remove later on
-	Logger::Lifecycle("TEST");
-	Logger::Debug("TEST");
-	Logger::Log("TEST");
-	Logger::Warning("TEST");
-	Logger::Error("TEST");
-
 	Logger::Lifecycle("Source Constructor Called!");
 }
 
