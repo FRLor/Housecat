@@ -77,6 +77,10 @@ void Game::Initialize() {
 		Logger::Error("Error Initializing TTF!"); 
 		return;
 	}
+	if (!(Mix_Init(MIX_INIT_OGG | MIX_INIT_MP3) & (MIX_INIT_OGG | MIX_INIT_MP3))) {
+		Logger::Error("Error Initializing Mixer!");
+		return;
+	}
 
 	SDL_DisplayMode displayMode;
 	SDL_GetCurrentDisplayMode(0, &displayMode);
@@ -102,6 +106,12 @@ void Game::Initialize() {
 
 	if (!rendererGame) {
 		Logger::Error("Error Creating Main Renderer!");
+		return;
+	}
+
+	//SDL MIXER
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0) {
+		Logger::Error("Error Initializing SDL Mixer!" + std::string(Mix_GetError()));
 		return;
 	}
 
