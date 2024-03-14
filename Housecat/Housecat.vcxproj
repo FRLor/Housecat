@@ -619,6 +619,7 @@
   <ItemGroup>
     <Image Include="assets\icon\Housecat.ico" />
     <Image Include="assets\textures\mochi.png" />
+    <Image Include="assets\tilemaps\terrain_tile.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="src\assetmanager\Resource.resx">
