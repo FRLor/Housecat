@@ -17,7 +17,9 @@ Level = {
         { type = "texture", id = "tilemap-texture", file = "./assets/tilemaps/terrain_tile.png" },
 
         { type = "font", id = "roboto", file = "./assets/fonts/roboto.regular.ttf", font_size = 18 },
-        { type = "font", id = "montserrat", file = "./assets/fonts/montserrat.bold.ttf", font_size = 20 }
+        { type = "font", id = "montserrat", file = "./assets/fonts/montserrat.bold.ttf", font_size = 20 },
+
+        { type = "music", id = "soundtrack", file = "./assets/sounds/Soundtrack.wav" }
     },
 
     ----------------------------------------------------
@@ -31,6 +33,19 @@ Level = {
         tileCols = 40,
         tileRows = 40,
     },
+
+    ----------------------------------------------------
+    --              SOUND CONFIG for game             --
+    ----------------------------------------------------
+    sounds = {
+        soundFilePath = "./assets/sounds/Soundtrack.wav",
+        assetID = "soundtrack",
+        volume = 10,
+        -- -1 for infinite loop
+        loops = -1
+    },
+
+
 
     ----------------------------------------------------
     --       ENTITIES and COMPONENTS for game         --

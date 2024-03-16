@@ -2,6 +2,7 @@
 
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 
 #include <map>
 #include <string>
@@ -15,9 +16,11 @@ private:
 
 	std::map<std::string, TTF_Font*> fonts;
 
+	std::map<std::string, Mix_Music*> musics;
+	std::map<std::string, Mix_Chunk*> sounds;
+
 	//TODO
 	//assets to manage
-	//sound
 
 public:
 	AssetManager();
@@ -31,6 +34,18 @@ public:
 	//fonts
 	TTF_Font* GetFont(const std::string& assetID);
 	void AddFont(const std::string& assetID, const std::string& filePath, int fontSize);
+
+	//sounds
+	Mix_Music* GetMusic(const std::string& assetID);
+	void AddMusic(const std::string& assetID, const std::string& filePath);
+	void PlayMusic(const std::string& assetID, int loops);
+	void SetVolume(int volume);
+	void PauseMusic();
+	void StopMusic();
+
+	//SFX
+	Mix_Chunk* GetSFX(const std::string& assetID);
+	void AddSFX(const std::string& assetID, const std::string& filePath);
 
 };
 
