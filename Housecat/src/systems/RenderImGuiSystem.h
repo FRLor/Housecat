@@ -24,7 +24,15 @@ public:
 
 
 	void Update(const std::unique_ptr<Housecat>& housecat, const SDL_Rect& camera) {
-		
+
+		//ImGui render collider button
+		ImGui::Begin("Render Colliders");
+		if (ImGui::Button("Toggle Colliders")) {
+			housecat->GetSystem<RenderColliderSystem>().ToggleRendering();
+		}
+		ImGui::End();
+
+		//ImGui spawn enemy menu
 		if (ImGui::Begin("Spawn Enemies")) {
 			//static variables for enemy
 			//transform

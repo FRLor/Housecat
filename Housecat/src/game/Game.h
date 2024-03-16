@@ -20,6 +20,7 @@ class Game {
 private:
 	bool isRunning;
 	bool isDebugging;
+	bool isRendering;
 	int millisecsPreviousFrame = 0;
 
 	Entity* playerEntity;

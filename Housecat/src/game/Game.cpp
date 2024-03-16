@@ -51,6 +51,7 @@ int Game::mapHeight;
 Game::Game() 
 	: isRunning(false),
 	isDebugging(false),
+	isRendering(false),
 	playerEntity(nullptr),
 	window(nullptr),
 	rendererGame(nullptr),
@@ -239,11 +240,15 @@ void Game::Render() {
 	//SYSTEMS - calls update rendering
 	housecat->GetSystem<RenderSystem>().Update(rendererGame, assetManager, camera);
 	if (isDebugging) {
-		housecat->GetSystem<RenderColliderSystem>().Update(rendererGame, camera);
+		auto& renderColliders = housecat->GetSystem<RenderColliderSystem>();
+		if (renderColliders.GetRendering()) {
+			housecat->GetSystem<RenderColliderSystem>().Update(rendererGame, camera);
+			housecat->GetSystem<RenderColliderSystem>().RenderDebugGrid(rendererGame, camera, (32 * 2), (32 * 2), windowWidth, windowHeight);
+		}
 
 		housecat->GetSystem<RenderImGuiSystem>().Update(housecat, camera);
-
 	}
+
 	housecat->GetSystem<RenderTextSystem>().Update(rendererGame, assetManager, camera);
 	housecat->GetSystem<RenderHealthSystem>().Update(rendererGame, assetManager, camera);
 	ImGui::EndFrame();
