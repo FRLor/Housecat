@@ -26,7 +26,8 @@ public:
 	void Update(const std::unique_ptr<Housecat>& housecat, const SDL_Rect& camera) {
 
 		//ImGui render collider button
-		ImGui::Begin("Render Colliders");
+		ImGuiWindowFlags windowRenderButton = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoNav;
+		ImGui::Begin("Show Colliders", NULL, windowRenderButton);
 		if (ImGui::Button("Toggle Colliders")) {
 			housecat->GetSystem<RenderColliderSystem>().ToggleRendering();
 		}
@@ -172,10 +173,10 @@ public:
 		ImGui::End();
 
 		//overlay dispalys map posiiton using mouse
-		ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoNav;
+		ImGuiWindowFlags windowMouseFlags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoNav;
 		ImGui::SetNextWindowPos(ImVec2(5, 5), ImGuiCond_Always, ImVec2(0, 0));
 		ImGui::SetNextWindowBgAlpha(0.75f);
-		if (ImGui::Begin("Map Coordinates", NULL, windowFlags)) {
+		if (ImGui::Begin("Map Coordinates", NULL, windowMouseFlags)) {
 			ImGui::Text(
 				"Coordinates (X=%.1f, Y=%.1f)",
 				ImGui::GetIO().MousePos.x + camera.x,
