@@ -40,7 +40,8 @@ Level = {
     sounds = {
         soundFilePath = "./assets/sounds/Soundtrack.wav",
         assetID = "soundtrack",
-        volume = 20,
+        volume = 10,
+        -- -1 for infinite loop
         loops = -1
     },
 
