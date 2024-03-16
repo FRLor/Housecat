@@ -47,6 +47,12 @@ int Game::windowWidth;
 int Game::windowHeight;
 int Game::mapWidth;
 int Game::mapHeight;
+int Game::paddingTop = 5;
+int Game::paddingRight = 0;
+int Game::paddingBottom = 0;
+int Game::paddingLeft = 5;
+int Game::tileSize;
+double Game::tileScale;
 
 Game::Game() 
 	: isRunning(false),

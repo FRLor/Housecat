@@ -4,6 +4,8 @@
 
 #include "../ecs/ECS.h"
 
+#include "../game/CollisionMap.h"
+
 #include "../eventmanager/EventManager.h"
 #include "../events/CollisionEvent.h"
 
@@ -55,10 +57,9 @@ public:
 	void Update(double deltaTime) {
 		for (auto entity : GetSystemEntities()) {
 			auto& transform = entity.GetComponent<TransformComponent>();
-			const auto& rigidbody = entity.GetComponent<RigidBodyComponent>();
-
-			transform.position.x += static_cast<float>(rigidbody.velocity.x * deltaTime);
-			transform.position.y += static_cast<float>(rigidbody.velocity.y * deltaTime);
+			auto& rigidbody = entity.GetComponent<RigidBodyComponent>();
+			//for player collision on collision map tiles
+			bool hasBoxCollider = entity.HasComponent<BoxColliderComponent>();
 
 			//new movement based on vel * dT * scale (non uniform scaling movement?)
 			//float dX = static_cast<float>(rigidbody.velocity.x * deltaTime * transform.scale.x);
@@ -67,23 +68,44 @@ public:
 			//transform.position.x += dX;
 			//transform.position.y += dY;
 
-			//prevent player form moving outside map
-			if (entity.HasTag("player")) {
-				//adjust padding for map (-5 on edge)
-				int paddingLeft = -5;
-				int paddingRight = -5;
-				int paddingTop = -5;
-				int paddingBottom = -5;
 
-				paddingLeft *= transform.scale.x;
-				paddingRight *= transform.scale.x;
-				paddingTop *= transform.scale.y;
-				paddingBottom *= transform.scale.y;
+			//calc init pos based on current velocity
+			glm::vec2 initPosition = transform.position + glm::vec2(rigidbody.velocity.x * deltaTime, rigidbody.velocity.y * deltaTime);
 
-				//update position within boundaries
-				transform.position.x = std::max(static_cast<float>(paddingLeft), std::min(transform.position.x, static_cast<float>(Game::mapWidth - paddingRight)));
-				transform.position.y = std::max(static_cast<float>(paddingTop), std::min(transform.position.y, static_cast<float>(Game::mapHeight - paddingBottom)));
+			//for clamping within padded boundaries
+			float maxPosX = (Game::mapWidth - Game::paddingRight) - transform.scale.x;
+			float maxPosY = (Game::mapHeight - Game::paddingBottom) - transform.scale.y;
+
+			initPosition.x = std::clamp(initPosition.x, static_cast<float>(Game::paddingLeft), maxPosX);
+			initPosition.y = std::clamp(initPosition.y, static_cast<float>(Game::paddingTop), maxPosY);
+
+			//tiles covered by the entity at init pos
+			int minX = static_cast<int>(initPosition.x / (Game::tileSize * Game::tileScale));
+			int maxX = static_cast<int>((initPosition.x + transform.scale.x * Game::tileSize) / (Game::tileSize * Game::tileScale));
+			int minY = static_cast<int>(initPosition.y / (Game::tileSize * Game::tileScale));
+			int maxY = static_cast<int>((initPosition.y + transform.scale.y * Game::tileSize) / (Game::tileSize * Game::tileScale));
+
+			bool canMove = true;
+			if (hasBoxCollider) {
+				for (int x = minX; x <= maxX && canMove; x++) {
+					for (int y = minY; y <= maxY && canMove; y++) {
+						if (!CollisionMap::WalkableTiles(x, y)) {
+							//nonwalkable
+							canMove = false;
+						}
+					}
+				}
 			}
+
+			if (canMove) {
+				transform.position = initPosition;
+			}
+			else if (entity.HasTag("player")) {
+				//player hits wall
+				rigidbody.velocity.x = 0;
+				rigidbody.velocity.y = 0;
+			}
+
 		
 			//checks if outside the map boundaries, buffer margin forgives 200 px W/H
 			int cullingMargin = 200;

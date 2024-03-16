@@ -52,8 +52,17 @@ public:
 
 	static int windowWidth;
 	static int windowHeight;
+
 	static int mapWidth;
 	static int mapHeight;
+
+	static int paddingTop;
+	static int paddingRight;
+	static int paddingBottom;
+	static int paddingLeft;
+
+	static int tileSize;
+	static double tileScale;
 
 	Entity* GetPlayerEntity() {
 		return playerEntity;
