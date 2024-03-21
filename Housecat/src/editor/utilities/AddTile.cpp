@@ -1,6 +1,6 @@
 #include "AddTile.h"
 
-#include "mouse/Mouse.h"
+#include "../mouse/Mouse.h"
 
 AddTile::AddTile(std::shared_ptr<Mouse>& mouse)
 	: tileID(-1),
