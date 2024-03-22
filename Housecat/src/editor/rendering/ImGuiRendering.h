@@ -2,6 +2,10 @@
 
 #include <memory>
 
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_sdlrenderer2.h>
+#include <imgui/imgui_impl_sdl2.h>
+
 #include "../utilities/SDLToolKit.h"
 
 #include "../../ecs/ECS.h"
@@ -36,7 +40,7 @@ public:
 	ImGuiRendering();
 	~ImGuiRendering();
 
-	void Update(EditorRenderer& renderer, const AssetManagerPtr& assetManager, SDL_Rect& camera, SDL_Rect& mouseTile, const float& zoom, const float& dT);
+	void Update(EditorRenderer& renderer, const AssetManagerPtr& assetManager, SDL_Rect& camera, SDL_Rect& mouseTile, SDL_Event& event, const float& zoom, const float& dT);
 
 	void RenderGrid(EditorRenderer& renderer, SDL_Rect& camera, const float& zoom);
 

@@ -15,7 +15,8 @@
 Editor::Editor()
 	: isRunning(false),
 	millisecsPreviousFrame(0),
-	zoom(0.0f),
+	deltaTime(0.0f),
+	zoom(1.0f),
 	mouseTile(),
 	camera(),
 	editorWindow(nullptr), 
@@ -78,11 +79,16 @@ void Editor::Initialize() {
 	//x, y, w, h
 	mouseTile = { 0, 0, 1, 1 };	
 
+	//camera
+	camera = { defaultCamX, defaultCamY, windowEditorWidth, windowEditorHeight };
+
 	IMGUI_CHECKVERSION();
 	//ImGui Init
 	editorImGuiContext = ImGui::CreateContext();
 	ImGui_ImplSDL2_InitForSDLRenderer(editorWindow.get(), editorRenderer.get());
 	ImGui_ImplSDLRenderer2_Init(editorRenderer.get());
+
+	ImGuiIO& IO = ImGui::GetIO(); (void)IO;
 
 	//TODO
 	assetManager = std::make_unique<AssetManager>();
@@ -102,11 +108,9 @@ void Editor::Initialize() {
 
 
 void Editor::ProcessInput() {
-	SDL_Event sdlEditorEvent;
-
-	while (SDL_PollEvent(&sdlEditorEvent)) {
+	while (SDL_PollEvent(&event)) {
 		//handle ImGui SDL input
-		ImGui_ImplSDL2_ProcessEvent(&sdlEditorEvent);
+		ImGui_ImplSDL2_ProcessEvent(&event);
 		ImGuiIO& IO = ImGui::GetIO();
 
 		//mouse buttons
@@ -115,21 +119,20 @@ void Editor::ProcessInput() {
 
 		IO.MousePos = ImVec2(static_cast<float>(mouseX), static_cast<float>(mouseY));
 		IO.MouseDown[0] = buttons & SDL_BUTTON(SDL_BUTTON_LEFT);
-		IO.MouseDown[1] = buttons & SDL_BUTTON(SDL_BUTTON_MIDDLE);
-		IO.MouseDown[2] = buttons & SDL_BUTTON(SDL_BUTTON_RIGHT);
+		IO.MouseDown[2] = buttons & SDL_BUTTON(SDL_BUTTON_MIDDLE);
+		IO.MouseDown[1] = buttons & SDL_BUTTON(SDL_BUTTON_RIGHT);
 
-		switch (sdlEditorEvent.type) {
+		switch (event.type) {
 		case SDL_QUIT:
 			isRunning = false;
 			break;
 		case SDL_MOUSEWHEEL:
 			if (!IO.WantCaptureMouse) {
-				//TDOOD
-				//zoom -> event
+				CameraController(event);
 			}
 			break;
 		case SDL_KEYDOWN:
-			if (sdlEditorEvent.key.keysym.sym == SDLK_ESCAPE) {
+			if (event.key.keysym.sym == SDLK_ESCAPE) {
 				isRunning = false;
 
 			}
@@ -145,12 +148,12 @@ void Editor::ProcessInput() {
 
 void Editor::Update() {
 	//Framerate capped at 144
-	int waitingTime = EDITOR_MILLISECS_PER_FRAME - (SDL_GetTicks() - millisecsPreviousFrame);
-	if (waitingTime > 0 && waitingTime <= EDITOR_MILLISECS_PER_FRAME) {
+	int waitingTime = editorMsPerFrame - (SDL_GetTicks() - millisecsPreviousFrame);
+	if (waitingTime > 0 && waitingTime <= editorMsPerFrame) {
 		SDL_Delay(waitingTime);
 	}
 	//diff. in ticks since last frame converted to secs
-	double deltaTime = (SDL_GetTicks() - millisecsPreviousFrame) / 1000.0;
+	deltaTime = (SDL_GetTicks() - millisecsPreviousFrame) / 1000.0f;
 	//store curr. frame time
 	millisecsPreviousFrame = SDL_GetTicks();
 
@@ -170,29 +173,20 @@ void Editor::Update() {
 
 
 void Editor::Render() {
-	SDL_SetRenderDrawColor(editorRenderer.get(), 10, 10, 10, 255);
+	SDL_SetRenderDrawColor(editorRenderer.get(), 120, 120, 120, 255);
 	SDL_RenderClear(editorRenderer.get());
 
 	//render editor
+	Housecat::GetInstance().GetSystem<RenderSystem>().UpdateEditor(editorRenderer.get(), assetManager, camera, deltaTime);
+
 	Housecat::GetInstance().GetSystem<ImGuiRendering>().RenderGrid(editorRenderer, camera, zoom);
-	Housecat::GetInstance().GetSystem<RenderSystem>().Update(editorRenderer.get(), assetManager, camera);
 
 	//TODO
 	//render collider
 	//render animation
 
-
-	ImGui_ImplSDLRenderer2_NewFrame();
-	ImGui_ImplSDL2_NewFrame();
-	ImGui::NewFrame();
-
-	ImGui::SetCurrentContext(editorImGuiContext);
-
-	ImGui::ShowDemoWindow();
-	ImGui::Render();
-	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
-	//ImGuiSDL::Render(ImGui::GetDrawData());
-	ImGui::EndFrame();
+	Housecat::GetInstance().GetSystem<ImGuiRendering>().Update
+	(editorRenderer, assetManager, camera, mouseTile, event, zoom, deltaTime);
 
 	SDL_RenderPresent(editorRenderer.get());
 }

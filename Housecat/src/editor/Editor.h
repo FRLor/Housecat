@@ -20,19 +20,26 @@ private:
 	static const int windowEditorWidth = 1920;
 	static const int windowEditorHeight = 1080 - windowBar;
 
-	const int EDITOR_FPS = 144;
-	const int EDITOR_MILLISECS_PER_FRAME = 1000 / EDITOR_FPS;
+	const int editorFPS = 144;
+	const int editorMsPerFrame = 1000 / editorFPS;
+	int millisecsPreviousFrame;
+	float deltaTime;
 
 	//editor state
 	bool isRunning;
 
-	int millisecsPreviousFrame;
-
+	//camera
+	const int defaultCamX = -350;
+	const int defaultCamY = -170;
+	const int defaultZoom = 1;
+	const int camSpeed = 5;
 	float zoom;
 
 	SDL_Rect mouseTile;
 
 	SDL_Rect camera;
+
+	SDL_Event event;
 
 	EditorWindow editorWindow;
 	EditorRenderer editorRenderer;
@@ -42,10 +49,6 @@ private:
 
 	//AssetManager ptr
 	AssetManagerPtr assetManager;
-
-	//TODO
-
-	//events?
 
 	void CameraController(SDL_Event& event);
 	void KeyboardCameraController();

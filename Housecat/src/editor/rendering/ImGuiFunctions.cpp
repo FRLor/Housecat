@@ -34,8 +34,10 @@ ImGuiFunctions::~ImGuiFunctions() {
 //TODO
 //ImGui management
 void ImGuiFunctions::InitImGui() {
-	//TODO
-	//ImGui
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+
+	ImGuiIO& IO = ImGui::GetIO(); (void)IO;
 }
 
 void ImGuiFunctions::Setup() {
@@ -97,10 +99,10 @@ void ImGuiFunctions::ShowViewMenu() {
 
 void ImGuiFunctions::ShowProjectMenu(EditorRenderer& renderer, const AssetManagerPtr& assetManager, std::shared_ptr<class Mouse>& mouse) {
 	//MENU project interact
-	if (ImGui::BeginMenu("Add Map")) {
+	if (ImGui::MenuItem("Add Map")) {
 		//TODO
 	}
-	if (ImGui::BeginMenu("Import Tileset")) {
+	if (ImGui::MenuItem("Import Tileset")) {
 		//TODO
 		//file management
 
@@ -164,27 +166,31 @@ void ImGuiFunctions::TilesetWindow(const AssetManagerPtr& assetManager, const gl
 			}
 		}			
 	}
+	ImGui::End();
 }
 
 void ImGuiFunctions::TileAttributes(const AssetManagerPtr& assetManager, std::shared_ptr<class Mouse>& mouse) {
 	//tile attributes interact
-	if (ImGui::BeginMenu("Tilesets")) {
-		//multiple tilesets
-	}
-	if (ImGui::BeginMenu("Transform")) {
-		//scale
-	}
-	if (ImGui::BeginMenu("Sprite")) {
-		//mouse x mouse y
+	//if (ImGui::BeginMenu("Tilesets")) {
+	//	//multiple tilesets
+	//}
+	//if (ImGui::BeginMenu("Transform")) {
+	//	//scale
+	//}
+	//if (ImGui::BeginMenu("Sprite")) {
+	//	//mouse x mouse y
 
-	}
+	//}
+	//ImGui::End();
+
 }
 
 void ImGuiFunctions::TilesetLayers(const AssetManagerPtr& assetManager) {
 	//layers interact
-	if (ImGui::BeginMenu("Layer")) {
+	/*if (ImGui::BeginMenu("Layer")) {
 
 	}
+	ImGui::End();*/
 }
 
 

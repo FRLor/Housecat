@@ -44,7 +44,10 @@ ImGuiRendering::~ImGuiRendering() {
 }
 
 
-void ImGuiRendering::Update(EditorRenderer& renderer, const AssetManagerPtr& assetManager, SDL_Rect& camera, SDL_Rect& mouseTile, const float& zoom, const float& dT) {
+void ImGuiRendering::Update(EditorRenderer& renderer, const AssetManagerPtr& assetManager, SDL_Rect& camera, SDL_Rect& mouseTile, SDL_Event& event, const float& zoom, const float& dT) {
+	//start frame
+	ImGui_ImplSDLRenderer2_NewFrame();
+	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
 	if (ImGui::BeginMainMenuBar()) {
@@ -89,6 +92,10 @@ void ImGuiRendering::Update(EditorRenderer& renderer, const AssetManagerPtr& ass
 		if (ImGui::BeginMenu("Project")) {
 			//show project menu
 
+			if (ImGui::MenuItem("Tilset Window")) {
+				//TODO
+			}
+
 			//clamp
 			//if (ImGui::InputInt("Tile Size", &tileSize, x, x)) {
 			//	if (tileSize <= x) {
@@ -114,11 +121,21 @@ void ImGuiRendering::Update(EditorRenderer& renderer, const AssetManagerPtr& ass
 			//	  SetHeight
 			//	}
 			//}
+			ImGui::EndMenu();
+
 		}
+		ImGui::EndMainMenuBar();
 
 	}
+	//update mouse
+	mouse->MousePanCamera(renderer, camera, assetManager, dT);
+	mouse->UpdateMousePosition(camera);
 
-	ImGui::EndMainMenuBar();
+
+	//render imgui
+	ImGui::Render();
+	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
+
 
 	
 }
