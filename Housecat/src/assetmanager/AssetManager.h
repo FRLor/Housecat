@@ -14,6 +14,8 @@ class AssetManager {
 private:
 	std::map<std::string, SDL_Texture*> textures;
 
+	std::map<std::string, EditorRenderer&> editorTextures;
+
 	std::map<std::string, TTF_Font*> fonts;
 
 	std::map<std::string, Mix_Music*> musics;
@@ -27,13 +29,24 @@ public:
 	~AssetManager();
 
 	//textures
+	//game
 	SDL_Texture* GetTexture(const std::string& assetID);
 	void AddTexture(SDL_Renderer* renderer, const std::string& assetID, const std::string& filePath);
 	void ClearAssets();
 
+	//editor
+	EditorRenderer& ReturnEditorTexture(const std::string& assetID);
+	void AddEditorTexture(EditorRenderer& renderer, const std::string& assetID, const std::string& filePath);
+	bool EditorHasTexture(const std::string& assetID);
+
+
+
 	//fonts
 	TTF_Font* GetFont(const std::string& assetID);
 	void AddFont(const std::string& assetID, const std::string& filePath, int fontSize);
+
+
+
 
 	//sounds
 	Mix_Music* GetMusic(const std::string& assetID);
