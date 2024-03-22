@@ -67,6 +67,8 @@ public:
 
 	void CreateTile(EditorRenderer& renderer, const AssetManagerPtr& assetManager, SDL_Rect& camera, SDL_Rect& mouseTile, SDL_Event& event);
 
+	bool MultiTile(const glm::vec2& pos);
+
 	void UpdateMousePosition(const SDL_Rect& camera);
 
 	void MousePanCamera(EditorRenderer& renderer, SDL_Rect& camera, const AssetManagerPtr& assetManager, const float& dT);
