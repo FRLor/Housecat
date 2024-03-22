@@ -14,7 +14,7 @@ class AssetManager {
 private:
 	std::map<std::string, SDL_Texture*> textures;
 
-	std::map<std::string, EditorRenderer&> editorTextures;
+	std::map<std::string, EditorTextures> editorTextures;
 
 	std::map<std::string, TTF_Font*> fonts;
 
@@ -35,7 +35,7 @@ public:
 	void ClearAssets();
 
 	//editor
-	EditorRenderer& ReturnEditorTexture(const std::string& assetID);
+	const EditorTextures& ReturnEditorTexture(const std::string& assetID);
 	void AddEditorTexture(EditorRenderer& renderer, const std::string& assetID, const std::string& filePath);
 	bool EditorHasTexture(const std::string& assetID);
 

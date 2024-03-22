@@ -43,18 +43,17 @@ void AssetManager::AddTexture(SDL_Renderer* renderer, const std::string& assetID
 
 
 
-EditorRenderer& AssetManager::ReturnEditorTexture(const std::string& assetID) {
+const EditorTextures& AssetManager::ReturnEditorTexture(const std::string& assetID) {
 	return editorTextures[assetID];
 }
 
 void AssetManager::AddEditorTexture(EditorRenderer& renderer, const std::string& assetID, const std::string& filePath) {
-	if (!EditorHasTexture(assetID)) {
-		SDL_Surface* surface = IMG_Load(filePath.c_str());
-		EditorTextures texture(SDL_CreateTextureFromSurface(renderer.get(), surface));
-		SDL_FreeSurface(surface);
-	}
+	SDL_Surface* surface = IMG_Load(filePath.c_str());
 
-	editorTextures.emplace(assetID, renderer);
+	EditorTextures texture(SDL_CreateTextureFromSurface(renderer.get(), surface));
+	SDL_FreeSurface(surface);
+
+	editorTextures.emplace(assetID, std::move(texture));
 }
 
 bool AssetManager::EditorHasTexture(const std::string& assetID) {
