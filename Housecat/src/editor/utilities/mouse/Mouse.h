@@ -1,14 +1,15 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <string>
 
-#include "../utilities/SDLToolKit.h"
+#include "../../utilities/SDLToolkit.h"
 
-#include "../../ecs/ECS.h"
-#include "../../assetmanager/AssetManager.h"
+#include "../../../ecs/ECS.h"
+#include "../../../assetmanager/AssetManager.h"
 
-#include "../../components/TransformComponent.h"
-#include "../../components/SpriteComponent.h"
+#include "../../../components/TransformComponent.h"
+#include "../../../components/SpriteComponent.h"
 
 class Mouse {
 private:

@@ -897,7 +897,7 @@
     <ClInclude Include="src\systems\RenderTextSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\editor\mouse\Mouse.h">
+    <ClInclude Include="src\editor\utilities\mouse\Mouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\editor\utilities\EditCanvasSize.h">
@@ -907,6 +907,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\editor\utilities\EditTile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\CollisionMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game\LevelManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1381,7 +1387,7 @@
     <ClCompile Include="src\editor\rendering\ImGuiFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\editor\mouse\Mouse.cpp">
+    <ClCompile Include="src\editor\utilities\mouse\Mouse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\editor\utilities\EditCanvasSize.cpp">
@@ -1393,12 +1399,21 @@
     <ClCompile Include="src\editor\utilities\EditTile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\game\CollisionMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game\LevelManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\textures\mochi.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\icon\Housecat.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\tilemaps\terrain_tile.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -1418,5 +1433,11 @@
     <Font Include="assets\fonts\montserrat.bold.ttf" />
     <Font Include="assets\fonts\montserrat.regular.ttf" />
     <Font Include="assets\fonts\roboto.regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="libs\lua\liblua53.a" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="assets\sounds\License.txt" />
   </ItemGroup>
 </Project>

@@ -9,7 +9,7 @@
 
 #include "../utilities/SDLToolKit.h"
 #include "../utilities/editmanager/EditManager.h"
-#include "../mouse/Mouse.h"
+#include "../utilities/mouse/Mouse.h"
 
 #include "../../ecs/ECS.h"
 #include "../../assetmanager/AssetManager.h"

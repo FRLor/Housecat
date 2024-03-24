@@ -2,7 +2,7 @@
 
 #include "Mouse.h"
 
-#include "../../assetmanager/AssetManager.h"
+#include "../../../assetmanager/AssetManager.h"
 
 
 Mouse::Mouse()
