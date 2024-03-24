@@ -48,3 +48,26 @@ void MapManagement::LoadMap(const AssetManagerPtr& assetManager, const std::stri
 	}
 	mapFile.close();
 }
+
+void MapManagement::SaveMap(std::filesystem::path fileName) {
+	if (!Housecat::GetInstance().IsThereGroup("tiles")) {
+		return;
+	}
+
+	std::ofstream mapFile(fileName);
+	if (!mapFile.is_open()) {
+		return;
+	}
+
+	auto tiles = Housecat::GetInstance().GetGroup("tiles");
+
+	for (const auto& tile : tiles) {
+		const auto& transform = tile.GetComponent<TransformComponent>();
+		const auto& sprite = tile.GetComponent<SpriteComponent>();
+
+		mapFile << "tiles" << " " << sprite.assetID << " " << sprite.width << " " << sprite.height << " "
+			<< sprite.srcRect.x << " " << sprite.srcRect.y << " " << sprite.zIndex << " " << transform.rotation
+			<< " " << transform.position.x << " " << transform.position.y << " " << transform.scale.x << " " << transform.scale.y << "\n";
+
+	}
+}
