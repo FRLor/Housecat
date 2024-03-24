@@ -30,6 +30,9 @@ private:
 	bool Undo;
 	bool Redo;
 
+	//exit
+	bool isExit;
+
 	//project
 	std::string file;
 	std::string assetID;
@@ -82,5 +85,10 @@ public:
 	//TODO
 	//shortcut management
 	void ApplyShortcuts();
+
+	//exit
+	const bool& GetExit() const {
+		return isExit;
+	}
 };
 

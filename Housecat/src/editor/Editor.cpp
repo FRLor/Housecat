@@ -13,12 +13,13 @@
 #include "../systems/AnimationSystem.h"
 
 Editor::Editor()
-	: isRunning(false),
+	: isRunning(true),
 	millisecsPreviousFrame(0),
 	deltaTime(0.0f),
 	zoom(1.0f),
 	mouseTile(),
 	camera(),
+	event(),
 	editorWindow(nullptr), 
 	editorRenderer(nullptr),
 	editorImGuiContext(nullptr) {
@@ -73,7 +74,6 @@ void Editor::Initialize() {
 	}
 
 	SDL_SetWindowFullscreen(editorWindow.get(), SDL_FALSE);
-	isRunning = true;
 
 	//mouse
 	//x, y, w, h
@@ -160,11 +160,10 @@ void Editor::Update() {
 	//TODO
 	Housecat::GetInstance().Update();
 
-	//TODO
-	//exit
-	/*if (Housecat::GetInstance().GetSystem<ImGuiRendering>().Exit()) {
+
+	if (Housecat::GetInstance().GetSystem<ImGuiRendering>().GetExit()) {
 		isRunning = false;
-	}*/
+	}
 
 	//TODO
 	//Housecat manager update

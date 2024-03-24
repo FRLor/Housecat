@@ -29,12 +29,18 @@ private:
 	int gridY;
 	bool gridSnap;
 
+	bool isExit;
+
 	std::shared_ptr<class Canvas> canvas;
 	std::shared_ptr<class ImGuiFunctions> imguiFunctions;
 	std::shared_ptr<class Mouse> mouse;
 	std::unique_ptr<class EditManager> editManager;
 
 	const bool MouseOutOfBounds() const;
+
+	void SetExit(bool exit) {
+		isExit = exit;
+	}
 
 public:
 	ImGuiRendering();
@@ -47,5 +53,9 @@ public:
 	void CreateNewCanvas();
 
 	void UpdateCanvas();
+
+	inline const bool& GetExit() const {
+		return isExit;
+	}
 
 };

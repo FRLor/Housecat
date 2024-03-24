@@ -22,7 +22,8 @@ ImGuiRendering::ImGuiRendering()
 	removedTiles(false),
 	gridX(0),
 	gridY(0),
-	gridSnap(false) {
+	gridSnap(false),
+	isExit(false) {
 
 	canvas = std::make_shared<Canvas>(canvasWidth, canvasHeight);
 	mouse = std::make_shared<Mouse>();
@@ -130,6 +131,9 @@ void ImGuiRendering::Update(EditorRenderer& renderer, const AssetManagerPtr& ass
 	//update mouse
 	mouse->MousePanCamera(renderer, camera, assetManager, dT);
 	mouse->UpdateMousePosition(camera);
+
+
+	SetExit(imguiFunctions->GetExit());
 
 
 	//render imgui

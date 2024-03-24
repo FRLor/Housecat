@@ -17,6 +17,7 @@ ImGuiFunctions::ImGuiFunctions(class std::shared_ptr<Mouse>& mouse)
 	isImageLoaded(false),
 	Undo(false),
 	Redo(false),
+	isExit(false),
 	file(""),
 	assetID(""),
 	tilesets(),
@@ -62,8 +63,8 @@ void ImGuiFunctions::ShowFileMenu(EditorRenderer& renderer, const AssetManagerPt
 		//TODO
 		//file management
 	}
-	if (ImGui::MenuItem("Exit", "ALT+F4")) {
-		//EXIT
+	if (ImGui::MenuItem("Exit", "ESC")) {
+		isExit = true;
 	}
 }
 
