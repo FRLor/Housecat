@@ -164,10 +164,6 @@ void Editor::Update() {
 	if (Housecat::GetInstance().GetSystem<ImGuiRendering>().GetExit()) {
 		isRunning = false;
 	}
-
-	//TODO
-	//Housecat manager update
-	//GRAB RENDER INSTANCE.
 }
 
 
@@ -176,9 +172,10 @@ void Editor::Render() {
 	SDL_RenderClear(editorRenderer.get());
 
 	//render editor
-	Housecat::GetInstance().GetSystem<RenderSystem>().UpdateEditor(editorRenderer.get(), assetManager, camera, deltaTime);
-
 	Housecat::GetInstance().GetSystem<ImGuiRendering>().RenderGrid(editorRenderer, camera, zoom);
+
+	Housecat::GetInstance().GetSystem<RenderSystem>().UpdateEditor(editorRenderer.get(), assetManager, camera, zoom);
+
 
 	//TODO
 	//render collider
