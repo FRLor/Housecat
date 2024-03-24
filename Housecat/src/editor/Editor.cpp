@@ -168,7 +168,7 @@ void Editor::Update() {
 
 
 void Editor::Render() {
-	SDL_SetRenderDrawColor(editorRenderer.get(), 120, 120, 120, 255);
+	SDL_SetRenderDrawColor(editorRenderer.get(), 185, 194, 202, 255);
 	SDL_RenderClear(editorRenderer.get());
 
 	//render editor
