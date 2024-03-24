@@ -26,3 +26,7 @@ std::string FileDialogue::OpenFile(const char* filterPattern, HWND windowHandle)
 
 	return std::string();
 }
+
+std::string FileDialogue::OpenTextureFile(const char* filterPattern, HWND windowHandle) {
+	return OpenFile(filterPattern, windowHandle);
+}
