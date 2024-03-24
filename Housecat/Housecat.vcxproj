@@ -139,6 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\editor\utilities\MapManagement.h" />
+    <ClInclude Include="src\editor\utilities\ProjectManagement.h" />
     <ClInclude Include="src\editor\utilities\EditCanvasSize.h" />
     <ClInclude Include="libs\imgui\imconfig.h" />
     <ClInclude Include="libs\imgui\imgui.h" />
@@ -595,6 +597,8 @@
     <None Include="SDL2_ttf.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\editor\utilities\MapManagement.cpp" />
+    <ClCompile Include="src\editor\utilities\ProjectManagement.cpp" />
     <ClCompile Include="src\editor\utilities\EditCanvasSize.cpp" />
     <ClCompile Include="libs\imgui\imgui.cpp" />
     <ClCompile Include="libs\imgui\imgui_demo.cpp" />
