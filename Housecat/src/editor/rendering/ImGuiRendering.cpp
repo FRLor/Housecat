@@ -22,7 +22,8 @@ ImGuiRendering::ImGuiRendering()
 	removedTiles(false),
 	gridX(0),
 	gridY(0),
-	gridSnap(false),
+	gridSnap(true),
+	gridShow(true),
 	isExit(false) {
 
 	canvas = std::make_shared<Canvas>(canvasWidth, canvasHeight);
@@ -145,9 +146,32 @@ void ImGuiRendering::Update(EditorRenderer& renderer, const AssetManagerPtr& ass
 }
 
 void ImGuiRendering::RenderGrid(EditorRenderer& renderer, SDL_Rect& camera, const float& zoom) {
-	//render
-	//for tiles y
-	//for tiles x
+	//calc full tiles in canvas
+	int xTiles = canvas->GetCanvasWidth() / tileSize;
+	int yTiles = canvas->GetCanvasHeight() / tileSize;
+
+
+	if (gridShow) {
+
+		SDL_SetRenderDrawColor(renderer.get(), 140, 140, 140, SDL_ALPHA_OPAQUE);
+
+		//vertical
+		for (int i = 0; i <= xTiles; i++) {
+			int x = std::floor(i * tileSize * zoom) - camera.x;
+			SDL_RenderDrawLine(renderer.get(), x, 0 - camera.y, x, (yTiles * tileSize * zoom) - camera.y);
+		}
+
+		//horizontal
+		for (int j = 0; j <= yTiles; j++) {
+			int y = std::floor(j * tileSize * zoom) - camera.y;
+			SDL_RenderDrawLine(renderer.get(), 0 - camera.x, y, (xTiles * tileSize * zoom) - camera.x, y);
+		}
+	}
+
+	//boundary
+	SDL_SetRenderDrawColor(renderer.get(), 37, 39, 41, SDL_ALPHA_OPAQUE);
+	SDL_Rect boundaryRect = { 0 - camera.x, 0 - camera.y, xTiles * tileSize * zoom, yTiles * tileSize * zoom };
+	SDL_RenderDrawRect(renderer.get(), &boundaryRect);
 }
 
 

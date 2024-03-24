@@ -28,6 +28,7 @@ private:
 	int gridX;
 	int gridY;
 	bool gridSnap;
+	bool gridShow;
 
 	bool isExit;
 
