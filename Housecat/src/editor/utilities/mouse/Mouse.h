@@ -7,6 +7,7 @@
 
 #include "../../../ecs/ECS.h"
 #include "../../../assetmanager/AssetManager.h"
+#include "../../rendering/Canvas.h"
 
 #include "../../../components/TransformComponent.h"
 #include "../../../components/SpriteComponent.h"
