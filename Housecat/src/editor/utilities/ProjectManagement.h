@@ -24,5 +24,9 @@ public:
 		const AssetManagerPtr& assetManager, std::vector<std::string>& assetID, std::vector<std::string>& assetFilePath,
 		int& tileSize);
 
+	void SaveProject(const std::string& fileName, const std::vector<std::string>& assetID, const std::vector<std::string>& assetFilePath,
+		const int& canvasWidth, const int& canvasHeight, const int& tileSize);
+
+	void SaveAsLua(const std::string& fileName, std::vector<std::string>& assetID, std::vector<std::string>& assetFilePath, const int& tileSize);
 
 };
