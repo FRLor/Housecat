@@ -38,7 +38,6 @@ private:
 
 	//mouse bounds
 	bool isMouseOutOfBounds;
-	const bool MouseOutOfBounds() const;
 
 
 	//component management
@@ -56,24 +55,44 @@ private:
 	bool MiddleMouseButton() {
 		return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(2);
 	}
-	bool RightMouseButton() {
-		return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(3);
-	}
 
 public:
 	Mouse();
 	~Mouse() = default;
 
 	//mouse 
-	void MouseTile(EditorRenderer& renderer, const AssetManagerPtr& assetManger, SDL_Rect& camera, SDL_Rect& mouseTile);
+	void MouseTile(EditorRenderer& renderer, const AssetManagerPtr& assetManager, SDL_Rect& camera, SDL_Rect& mouseTile);
 
 	void CreateTile(EditorRenderer& renderer, const AssetManagerPtr& assetManager, SDL_Rect& camera, SDL_Rect& mouseTile, SDL_Event& event);
+
+	void RemoveTile(EditorRenderer& renderer, const AssetManagerPtr& assetManager, SDL_Rect& camera, SDL_Rect& mouseTile, SDL_Event& event);
 
 	bool MultiTile(const glm::vec2& pos);
 
 	void UpdateMousePosition(const SDL_Rect& camera);
 
 	void MousePanCamera(EditorRenderer& renderer, SDL_Rect& camera, const AssetManagerPtr& assetManager, const float& dT);
+
+
+	//mouse bounds
+	const bool MouseOutOfBounds() const;
+
+	inline const glm::vec2& GetMousePosition() const {
+		return mousePosWindow;
+	}
+
+	inline const glm::vec2& GetMouseRect() const {
+		return mouseRect;
+	}
+
+	inline void MouseOverWindow(bool isOver) {
+		isMouseOutOfBounds = isOver;
+	}
+
+	inline void SetMouseTileRect(int mouseRectX, int mouseRectY) {
+		mouseRect = glm::vec2(mouseRectX, mouseRectY);
+	}
+
 
 	//components
 	void ApplyTransform(const int scaleX, const int scaley);
