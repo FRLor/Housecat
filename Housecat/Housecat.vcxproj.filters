@@ -918,6 +918,9 @@
     <ClInclude Include="src\editor\utilities\LuaExporter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\editor\utilities\FileDialogue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="libs\glm\detail\func_common.inl">
@@ -1409,6 +1412,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\editor\utilities\LuaExporter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editor\utilities\FileDialogue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
