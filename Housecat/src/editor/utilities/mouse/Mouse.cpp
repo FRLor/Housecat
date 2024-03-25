@@ -146,6 +146,22 @@ void Mouse::CreateTile(EditorRenderer& renderer, const AssetManagerPtr& assetMan
 	}
 }
 
+
+void Mouse::RemoveTile(EditorRenderer& renderer, const AssetManagerPtr& assetManager, SDL_Rect& camera, SDL_Rect& mouseTile, SDL_Event& event) {
+	//multi tiles
+	glm::vec2 pos = glm::vec2(mouseTile.x + camera.x / tileSize, mouseTile.y + camera.y / tileSize);
+
+	//set transform account camera
+	appliedTransform.position = glm::vec2(mouseTile.x + camera.x, mouseTile.y + camera.y);
+
+	//reset mouse press
+	if (!LeftMouseButton()) {
+		isLeftMouseButton = false;
+	}
+
+}
+
+
 bool Mouse::MultiTile(const glm::vec2& pos) {
 	if (gridSnap) {
 		if ((pos.x != mousePrevPosTile.x || pos.y != mousePrevPosTile.y) && LeftMouseButton()) {
