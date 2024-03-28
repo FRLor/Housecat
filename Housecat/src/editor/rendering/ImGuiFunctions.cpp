@@ -91,44 +91,69 @@ void ImGuiFunctions::ShowFileMenu(EditorRenderer& renderer, const AssetManagerPt
 	}
 }
 
-void ImGuiFunctions::ShowEditMenu() {
-	//MENU edit interact
-	if (ImGui::MenuItem("Undo", "CTRL+Z")) {
-		//Undo = true;
-	}
-	if (ImGui::MenuItem("Redo", "CTRL+Y")) {
-		//Redo = true;
-	}
-}
+//MOVE TO ImGuiRendering
+//void ImGuiFunctions::ShowEditMenu() {
+//	//MENU edit interact
+//	if (ImGui::MenuItem("Undo", "CTRL+Z")) {
+//		//Undo = true;
+//	}
+//	if (ImGui::MenuItem("Redo", "CTRL+Y")) {
+//		//Redo = true;
+//	}
+//}
 
-void ImGuiFunctions::ShowViewMenu() {
-	//MENU view interact
-	if (ImGui::MenuItem("Show Grid", "CTRL+G")) {
-		//TODO
-		//grid management
-	}
-	if (ImGui::MenuItem("Grid Snapping")) {
-		//TODO
-			
-	}
-	if (ImGui::MenuItem("Zoom In")) {
-		//TODO
-			
-	}
-	if (ImGui::MenuItem("Zoom Out")) {
-		//TODO
-			
-	}
-}
+//MOVE TO ImGuiRendering
+//void ImGuiFunctions::ShowViewMenu() {
+//	//MENU view interact
+//	if (ImGui::MenuItem("Show Grid", "CTRL+G")) {
+//		//TODO
+//		//grid management
+//	}
+//	if (ImGui::MenuItem("Grid Snapping")) {
+//		//TODO
+//			
+//	}
+//	if (ImGui::MenuItem("Zoom In")) {
+//		//TODO
+//			
+//	}
+//	if (ImGui::MenuItem("Zoom Out")) {
+//		//TODO
+//			
+//	}
+//}
 
-void ImGuiFunctions::ShowProjectMenu(EditorRenderer& renderer, const AssetManagerPtr& assetManager, std::shared_ptr<class Mouse>& mouse) {
-	//MENU project interact
-	if (ImGui::MenuItem("Add Map")) {
-		//TODO
-	}
-	if (ImGui::MenuItem("Import Tileset")) {
-		//TODO
-		//file management
+void ImGuiFunctions::ShowProjectMenu(EditorRenderer& renderer, const AssetManagerPtr& assetManager) {
+
+	if (ImGui::MenuItem("Add Tileset")) {
+		FileDialogue fileDialog;
+		imageName = fileDialog.OpenTextureFile();
+
+		if (imageName.empty()) {
+			return;
+		}
+
+		std::filesystem::path path(imageName);
+		assetID = path.stem().string();
+
+		for (const auto& assets : tilesets) {
+			if (assets == assetID) {
+				return;
+			}
+		}
+
+		assetManager->AddEditorTexture(renderer, assetID, imageName);
+
+		if (SDL_QueryTexture(assetManager->ReturnEditorTexture(assetID).get(), NULL, NULL, &textureWidth, &textureHeight) != 0) {
+			const char* error = SDL_GetError();
+			loadTileset = false;
+		}
+		else {
+			loadTileset = true;
+			tilesets.push_back(assetID);
+			tilesetsTarget.push_back(imageName);
+			tilesetLoaded = true;
+		}
 
 	}
 }
