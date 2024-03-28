@@ -17,7 +17,7 @@ Mouse::Mouse()
 	isRightMouseButton(false),
 	tileAdded(false),
 	tileRemoved(false),
-	tileRecent(0),
+	tileRecent(-1),
 	tileSize(16),
 	panX(0),
 	panY(0),
@@ -158,7 +158,41 @@ void Mouse::RemoveTile(EditorRenderer& renderer, const AssetManagerPtr& assetMan
 	if (!LeftMouseButton()) {
 		isLeftMouseButton = false;
 	}
+	if ((event.type == SDL_MOUSEBUTTONDOWN || LeftMouseButton()) && !isMouseOutOfBounds) {
+		if ((event.button.button == SDL_BUTTON_LEFT && !isLeftMouseButton) || MultiTile(pos)) {
+			if (!Housecat::GetInstance().IsThereGroup("tiles")) {
+				return;
+			}
 
+			//help for non precise removing on tile
+			glm::vec2 subtract = glm::vec2(
+				(mouseRect.x * appliedTransform.scale.x) / 2,
+				(mouseRect.y * appliedTransform.scale.y) / 2
+			);
+
+			auto entities = Housecat::GetInstance().GetGroup("tiles");
+
+			//remove tiles on hover
+			for (auto& entity : entities) {
+				const auto& transform = entity.GetComponent<TransformComponent>();
+				const auto& sprite = entity.GetComponent<SpriteComponent>();
+
+				if (mousePosX >= transform.position.x && mousePosX <= transform.position.x + sprite.width * transform.scale.x &&
+					mousePosY >= transform.position.y && mousePosY <= transform.position.y + sprite.height * transform.scale.y &&
+					appliedSprite.zIndex == sprite.zIndex) {
+
+					//storing for undo|redo
+					removedTransform = transform;
+					removedSprite = sprite;
+
+					entity.Kill();
+					isLeftMouseButton = true;
+					tileRemoved = true;
+					break;
+				}
+			}
+		}
+	}
 }
 
 
