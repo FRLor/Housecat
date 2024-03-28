@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <sol/sol.hpp>
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_sdlrenderer2.h>
@@ -36,6 +37,8 @@ private:
 	std::shared_ptr<class ImGuiFunctions> imguiFunctions;
 	std::shared_ptr<class Mouse> mouse;
 	std::unique_ptr<class EditManager> editManager;
+
+	sol::state lua;
 
 	const bool MouseOutOfBounds() const;
 

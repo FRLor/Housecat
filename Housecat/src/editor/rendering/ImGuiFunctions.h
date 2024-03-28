@@ -10,6 +10,9 @@
 #include "../utilities/SDLToolKit.h"
 #include "../utilities/editmanager/EditManager.h"
 #include "../utilities/mouse/Mouse.h"
+#include "../utilities/FileDialogue.h"
+#include "../utilities/ProjectManagement.h"
+
 
 #include "../../ecs/ECS.h"
 #include "../../assetmanager/AssetManager.h"
@@ -23,8 +26,9 @@ private:
 	int tileHeight;
 	int textureWidth;
 	int textureHeight;
-	bool isImageLoaded;
 
+	bool loadTileset;
+	bool isNewFile;
 
 	//edit
 	bool Undo;
@@ -34,12 +38,19 @@ private:
 	bool isExit;
 
 	//project
-	std::string file;
+	std::string fileName;
 	std::string assetID;
+	std::string imageName;
+	std::string luaFile;
+
+
 
 	//tilesets
 	std::vector<std::string> tilesets;
 	std::vector<std::string> tilesetsTarget;
+
+	std::unique_ptr<class FileDialogue> fileDialog;
+	std::unique_ptr<class ProjectManagement> projectManagement;
 
 	std::unique_ptr<class EditManager> editManager;
 
@@ -57,7 +68,7 @@ public:
 
 	//TODO
 	//project management
-	void ShowFileMenu(EditorRenderer& renderer, const AssetManagerPtr& assetManager, std::shared_ptr<Canvas>& canvas, int& tileSize);
+	void ShowFileMenu(EditorRenderer& renderer, const AssetManagerPtr& assetManager, std::shared_ptr<Canvas>& canvas, sol::state& lua, int& tileSize);
 
 	void ShowEditMenu();
 
@@ -69,7 +80,7 @@ public:
 	//file management
 	void NewProject();
 
-	void OpenProject(EditorRenderer& renderer, const AssetManagerPtr& assetManager, std::shared_ptr<Canvas>& canvas, int& tileSize);
+	void Open(EditorRenderer& renderer, const AssetManagerPtr& assetManager, std::shared_ptr<Canvas>& canvas, sol::state& lua, int& tileSize);
 
 	void Save(EditorRenderer& renderer, const AssetManagerPtr& assetManager, const int& canvasWidth, const int& canvasHeight, int& tileSize);
 

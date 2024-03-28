@@ -54,7 +54,7 @@ void ImGuiRendering::Update(EditorRenderer& renderer, const AssetManagerPtr& ass
 
 	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("File")) {
-			imguiFunctions->ShowFileMenu(renderer, assetManager, canvas, tileSize);
+			imguiFunctions->ShowFileMenu(renderer, assetManager, canvas, lua, tileSize);
 			ImGui::EndMenu();
 		}
 		

@@ -5,6 +5,7 @@
 
 #include "../utilities/SDLToolkit.h"
 #include "../utilities/editmanager/EditManager.h"
+#include <sol/sol.hpp>
 
 ImGuiFunctions::ImGuiFunctions(class std::shared_ptr<Mouse>& mouse)
 	//int tileWidth, tileHeight, scaleX, scaleY, layer, tileOffset, srcRectX, srcRectY
@@ -14,16 +15,19 @@ ImGuiFunctions::ImGuiFunctions(class std::shared_ptr<Mouse>& mouse)
 	tileHeight(16),
 	textureWidth(0),
 	textureHeight(0),
-	isImageLoaded(false),
+	loadTileset(false),
+	isNewFile(false),
 	Undo(false),
 	Redo(false),
 	isExit(false),
-	file(""),
+	fileName(""),
 	assetID(""),
 	tilesets(),
 	tilesetsTarget(),
 	mouse(mouse),
-	editManager(std::make_unique<EditManager>()) {
+	editManager(std::make_unique<EditManager>()),
+	fileDialog(std::make_unique<FileDialogue>()),
+	projectManagement(std::make_unique<ProjectManagement>()) {
 	
 	//Logger::Lifecycle("ImGuiFunctions Constructor Called!");
 }
@@ -48,13 +52,13 @@ void ImGuiFunctions::Setup() {
 
 //TODO
 //menu bar management
-void ImGuiFunctions::ShowFileMenu(EditorRenderer& renderer, const AssetManagerPtr& assetManager, std::shared_ptr<Canvas>& canvas, int& tileSize) {
-	//MENU file interact
+void ImGuiFunctions::ShowFileMenu(EditorRenderer& renderer, const AssetManagerPtr& assetManager, std::shared_ptr<Canvas>& canvas, sol::state& lua, int& tileSize) {
+//MENU file interact
 	if (ImGui::MenuItem("New Project", "CTRL+N")) {
-		NewProject();
+		isNewFile = true;
 	}
-	if (ImGui::MenuItem("Open Project", "CTRL+O")) {
-		OpenProject(renderer, assetManager, canvas, tileSize);
+	if (ImGui::MenuItem("Open", "CTRL+O")) {
+		Open(renderer, assetManager, canvas, lua, tileSize);
 	}
 	if (ImGui::MenuItem("Save", "CTRL+S")) {
 		Save(renderer, assetManager, canvas->GetCanvasWidth(), canvas->GetCanvasHeight(), tileSize);
@@ -62,7 +66,26 @@ void ImGuiFunctions::ShowFileMenu(EditorRenderer& renderer, const AssetManagerPt
 	if (ImGui::MenuItem("Save As", "CTRL+SHIFT+S")) {
 		//TODO
 		//file management
+		std::string file = fileDialog->SaveFile();
+
+		if (file == "") {
+			return;
+		}
+		fileName = file;
+		projectManagement->SaveProject(fileName, tilesets, tilesetsTarget, canvas->GetCanvasWidth(), canvas->GetCanvasHeight(), tileSize);
 	}
+
+	if (ImGui::MenuItem("Export to Lua Table")) {
+		std::string file = fileDialog->SaveFile();
+
+		if (file == "") {
+			// Set Lua file to the selected filename
+			return;
+		}
+		luaFile = file;
+		projectManagement->SaveAsLua(luaFile, tilesets, tilesetsTarget, tileSize);
+	}
+
 	if (ImGui::MenuItem("Exit", "ESC")) {
 		isExit = true;
 	}
@@ -116,18 +139,33 @@ void ImGuiFunctions::NewProject() {
 
 }
 
-void ImGuiFunctions::OpenProject(EditorRenderer& renderer, const AssetManagerPtr& assetManager, std::shared_ptr<Canvas>& canvas, int& tileSize) {
+void ImGuiFunctions::Open(EditorRenderer& renderer, const AssetManagerPtr& assetManager, std::shared_ptr<Canvas>& canvas, sol::state& lua, int& tileSize) {
+	fileName = fileDialog->OpenFile();
 
+	if (fileName == "") {
+		return;
+	}
+	projectManagement->OpenProject(lua, fileName, renderer, canvas, assetManager, tilesets, tilesetsTarget, tileSize);
 }
 
 void ImGuiFunctions::Save(EditorRenderer& renderer, const AssetManagerPtr& assetManager, const int& canvasWidth, const int& canvasHeight, int& tileSize) {
+	if (fileName == "") {
+		fileName = fileDialog->SaveFile();
 
+		if (fileName == "") {
+			return;
+		}
+		projectManagement->SaveProject(fileName, tilesets, tilesetsTarget, canvasWidth, canvasHeight, tileSize);
+	}
+	else {
+		projectManagement->SaveProject(fileName, tilesets, tilesetsTarget, canvasWidth, canvasHeight, tileSize);
+	}
 }
 
 //TODO
 //tileset management
 void ImGuiFunctions::TilesetWindow(const AssetManagerPtr& assetManager, const glm::vec2& mouseRect) {
-	if (ImGui::Begin("Tileset"), isImageLoaded) {
+	if (ImGui::Begin("Tileset"), &loadTileset) {
 		//resize on mouse scroll
 		float scrollX = ImGui::GetScrollX();
 		float scrollY = ImGui::GetScrollY();
