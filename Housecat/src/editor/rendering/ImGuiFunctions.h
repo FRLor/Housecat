@@ -30,7 +30,8 @@ private:
 	bool loadTileset;
 	bool isNewFile;
 	bool tilesetLoaded;
-
+	bool newCanvas;
+	bool isReset;
 
 	//edit
 	bool Undo;
@@ -93,6 +94,11 @@ public:
 	void TilesetLayers(const AssetManagerPtr& assetManager);
 
 	void TileAttributes(const AssetManagerPtr& assetManager, std::shared_ptr<class Mouse>& mouse);
+
+
+	void OpenNewWindow();
+
+	void ResetLoadedFiles();
 
 
 	//TODO

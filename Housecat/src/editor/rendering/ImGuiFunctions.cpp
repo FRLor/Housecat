@@ -17,6 +17,9 @@ ImGuiFunctions::ImGuiFunctions(class std::shared_ptr<Mouse>& mouse)
 	textureHeight(0),
 	loadTileset(false),
 	isNewFile(false),
+	tilesetLoaded(false),
+	newCanvas(false),
+	isReset(false),
 	Undo(false),
 	Redo(false),
 	isExit(false),
@@ -259,6 +262,41 @@ void ImGuiFunctions::TilesetLayers(const AssetManagerPtr& assetManager) {
 
 
 
+void ImGuiFunctions::OpenNewWindow() {
+	if (!isNewFile) {
+		return;
+	}
+
+	if (ImGui::Begin("New Canvas")) {
+		ImGui::Text("Are you sure?");
+		ImGui::Spacing();
+
+		if (ImGui::Button("Yes")) {
+			newCanvas = true;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("No")) {
+			isNewFile = false;
+		}
+		ImGui::End();
+	}
+
+	if (newCanvas) {
+		ResetLoadedFiles();
+		isNewFile = false;
+		newCanvas = false;
+	}
+}
+
+void ImGuiFunctions::ResetLoadedFiles() {
+	fileName = "";
+	assetID = "";
+	imageName = "";
+	loadTileset = false;
+	tilesets.clear();
+	tilesetsTarget.clear();
+	isReset = true;
+}
 
 
 
